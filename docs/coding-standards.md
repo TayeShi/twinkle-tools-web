@@ -18,6 +18,563 @@
 ### 4. 可维护性
 编写易于维护和扩展的代码，考虑未来的需求变化。
 
+### 5. 高内聚低耦合
+模块应该有明确的职责，模块间的依赖关系要简单明了。
+
+---
+
+## 🏗 架构要求
+
+### 1. 分层架构
+严格遵循分层架构原则，确保层间依赖关系清晰：
+
+```
+表示层 (UI) → 应用层 (Business Logic) → 领域层 (Domain) → 基础设施层 (Infrastructure)
+```
+
+#### 实施要求
+```typescript
+// ✅ 推荐：遵循分层结构
+// hooks/useCalculator.ts - 应用层
+export function useCalculator() {
+  const [state, dispatch] = useReducer(calculatorReducer, initialState);
+  
+  const calculate = useCallback(() => {
+    const result = calculatorEngine.evaluate(state.expression); // 调用领域层
+    dispatch({ type: 'SET_RESULT', payload: result });
+  }, [state.expression]);
+  
+  return { state, calculate };
+}
+
+// domain/calculator/CalculatorEngine.ts - 领域层
+export class CalculatorEngine {
+  evaluate(expression: string): number {
+    // 纯业务逻辑，不依赖UI或存储
+  }
+}
+
+// ❌ 避免：跨层调用
+export function CalculatorDisplay() {
+  // UI 组件直接操作存储（违反分层原则）
+  useEffect(() => {
+    localStorage.setItem('result', result);
+  }, [result]);
+}
+```
+
+### 2. 模块解耦
+每个工具模块应该是独立的功能单元，减少模块间的直接依赖。
+
+#### 模块边界
+```typescript
+// ✅ 推荐：定义清晰的模块接口
+// modules/calculator/index.ts
+export interface CalculatorModule {
+  createTool(config?: CalculatorConfig): CalculatorTool;
+  useCalculator(): CalculatorHook;
+  components: CalculatorComponents;
+}
+
+export const calculatorModule: CalculatorModule = {
+  createTool: (config) => new CalculatorTool(config),
+  useCalculator: () => useCalculator(),
+  components: {
+    Display,
+    Keypad,
+    History,
+  },
+};
+
+// ❌ 避免：模块间直接依赖
+// 在颜色选择器中直接导入计算器
+import { CalculatorEngine } from '../calculator/engine'; // 违反模块解耦
+```
+
+### 3. 依赖倒置
+高层模块不应依赖低层模块，两者都应依赖抽象。
+
+#### 接口定义
+```typescript
+// ✅ 推荐：定义服务接口
+// interfaces/StorageService.ts
+export interface StorageService {
+  save<T>(key: string, data: T): Promise<void>;
+  load<T>(key: string): Promise<T | null>;
+  remove(key: string): Promise<void>;
+}
+
+// 实现类依赖接口
+export class LocalStorageService implements StorageService {
+  async save<T>(key: string, data: T): Promise<void> {
+    localStorage.setItem(key, JSON.stringify(data));
+  }
+  
+  // ...
+}
+
+// 使用依赖注入
+export function SettingsManager({ storage }: { storage: StorageService }) {
+  const saveSettings = async (settings: UserSettings) => {
+    await storage.save('settings', settings);
+  };
+  
+  return { saveSettings };
+}
+```
+
+### 4. 事件驱动通信
+使用事件总线进行模块间通信，减少直接依赖。
+
+```typescript
+// ✅ 推荐：事件驱动通信
+// lib/EventBus.ts
+export class EventBus {
+  private listeners: Map<string, Set<Function>> = new Map();
+  
+  emit(event: string, data: any): void {
+    const handlers = this.listeners.get(event);
+    if (handlers) {
+      handlers.forEach(handler => handler(data));
+    }
+  }
+  
+  on(event: string, handler: Function): () => void {
+    if (!this.listeners.has(event)) {
+      this.listeners.set(event, new Set());
+    }
+    this.listeners.get(event)!.add(handler);
+    
+    return () => {
+      this.listeners.get(event)!.delete(handler);
+    };
+  }
+}
+
+// 使用示例
+// 计算器模块发送事件
+const eventBus = new EventBus();
+const handleResult = (result: number) => {
+  eventBus.emit('calculator:result', { result, timestamp: Date.now() });
+};
+
+// 历史记录模块监听事件
+eventBus.on('calculator:result', (data) => {
+  console.log('新的计算结果:', data);
+});
+```
+
+---
+
+## 📦 模块化开发要求
+
+### 1. 目录结构规范
+每个工具模块必须遵循统一的目录结构：
+
+```
+modules/[tool-name]/
+├── index.ts              # 模块导出接口
+├── types.ts              # 类型定义
+├── components/           # UI 组件
+│   ├── index.ts         # 组件导出
+│   ├── ToolHeader.tsx
+│   ├── ToolArea.tsx
+│   └── ToolSettings.tsx
+├── hooks/                # 自定义 Hooks
+│   ├── useTool.ts       # 主要业务逻辑
+│   └── index.ts
+├── domain/               # 领域层
+│   ├── engine.ts        # 核心算法
+│   ├── types.ts         # 领域类型
+│   └── index.ts
+├── infrastructure/      # 基础设施层
+│   ├── storage.ts       # 存储实现
+│   ├── api.ts          # API 调用
+│   └── index.ts
+└── __tests__/           # 测试文件
+    ├── component.test.tsx
+    ├── hook.test.ts
+    └── domain.test.ts
+```
+
+### 2. 模块接口规范
+每个模块必须导出标准化的接口：
+
+```typescript
+// ✅ 推荐：标准化模块接口
+export interface ToolModule<TConfig = any, TState = any> {
+  // 基本信息
+  readonly id: string;
+  readonly name: string;
+  readonly version: string;
+  
+  // 创建工具实例
+  createTool(config?: TConfig): Tool<TConfig, TState>;
+  
+  // Hook
+  useTool(config?: TConfig): ToolHook<TState>;
+  
+  // 组件
+  readonly components: {
+    ToolArea: React.ComponentType<any>;
+    ToolSettings?: React.ComponentType<any>;
+    ToolHeader?: React.ComponentType<any>;
+  };
+  
+  // 类型
+  readonly types: {
+    Config: TConfig;
+    State: TState;
+  };
+}
+```
+
+### 3. 配置管理
+每个工具必须有明确的配置接口：
+
+```typescript
+// ✅ 推荐：配置接口定义
+export interface ToolConfig {
+  // 基础配置
+  theme?: 'light' | 'dark' | 'auto';
+  language?: string;
+  
+  // 工具特定配置
+  precision?: number;
+  enableHistory?: boolean;
+  
+  // 扩展配置
+  [key: string]: any;
+}
+
+// 默认配置
+export const defaultToolConfig: ToolConfig = {
+  theme: 'auto',
+  language: 'zh-CN',
+  precision: 10,
+  enableHistory: true,
+};
+```
+
+---
+
+## 🔧 代码组织要求
+
+### 1. 导入导出规范
+
+#### 导入顺序
+```typescript
+// ✅ 推荐：按依赖层级导入
+// 1. React 和 Next.js 相关
+import React, { useState, useEffect, useCallback } from 'react';
+import { NextRouter } from 'next/router';
+
+// 2. 第三方库
+import { clsx } from 'clsx';
+import { format } from 'date-fns';
+
+// 3. 项目接口和类型
+import type { StorageService } from '@/interfaces/StorageService';
+import type { ToolConfig } from '@/types/tool';
+
+// 4. 共享组件和工具
+import { Card, Button } from '@/components/ui';
+import { cn } from '@/lib/utils';
+
+// 5. 当前模块相关
+import { useToolState } from '@/hooks/useToolState';
+import { ToolArea } from './ToolArea';
+import type { CalculatorState } from './types';
+
+// ❌ 避免：混乱的导入顺序
+import { Card } from '@/components/ui';
+import React from 'react';
+import { useState } from 'react';
+import format from 'date-fns';
+import { Button } from '@/components/ui';
+```
+
+#### 导出规范
+```typescript
+// ✅ 推荐：明确的导出
+// 主要功能导出
+export { CalculatorTool } from './CalculatorTool';
+export { useCalculator } from './useCalculator';
+export { CalculatorEngine } from './domain/CalculatorEngine';
+
+// 类型导出
+export type { CalculatorConfig, CalculatorState } from './types';
+
+// 默认导出（主要组件）
+export { default as Calculator } from './Calculator';
+
+// ❌ 避免：混合导出方式
+export CalculatorTool from './CalculatorTool'; // 不一致
+export { CalculatorEngine } from './domain/CalculatorEngine';
+export default CalculatorTool; // 与命名导出冲突
+```
+
+### 2. 类型定义规范
+
+#### 接口设计
+```typescript
+// ✅ 推荐：清晰的接口设计
+export interface Tool<TConfig = any, TResult = any> {
+  // 基本属性
+  readonly id: string;
+  readonly name: string;
+  readonly version: string;
+  readonly description: string;
+  
+  // 配置相关
+  config: TConfig;
+  setConfig(config: Partial<TConfig>): void;
+  
+  // 执行相关
+  execute(input: any): Promise<TResult>;
+  validate(input: any): boolean;
+  
+  // 状态相关
+  getState(): ToolState;
+  reset(): void;
+}
+
+// 扩展接口
+export interface AdvancedTool<TConfig, TResult> extends Tool<TConfig, TResult> {
+  // 高级功能
+  batch(inputs: any[]): Promise<TResult[]>;
+  stream?(input: AsyncIterable<any>): AsyncIterable<TResult>;
+  cancel?(): void;
+}
+```
+
+#### 泛型使用
+```typescript
+// ✅ 推荐：有意义的泛型约束
+export interface Repository<T, K = string> {
+  // 基础 CRUD
+  create(data: T): Promise<T>;
+  read(key: K): Promise<T | null>;
+  update(key: K, data: Partial<T>): Promise<T>;
+  delete(key: K): Promise<boolean>;
+  
+  // 批量操作
+  createMany(data: T[]): Promise<T[]>;
+  readMany(keys: K[]): Promise<T[]>;
+  
+  // 查询
+  find(predicate: (item: T) => boolean): Promise<T[]>;
+  findOne(predicate: (item: T) => boolean): Promise<T | null>;
+}
+
+// 具体实现
+export class LocalStorageRepository<T> implements Repository<T, string> {
+  constructor(private keyPrefix: string) {}
+  
+  async create(data: T): Promise<T> {
+    const key = `${this.keyPrefix}_${Date.now()}`;
+    localStorage.setItem(key, JSON.stringify(data));
+    return data;
+  }
+  
+  // ... 其他方法实现
+}
+```
+
+### 3. 错误处理规范
+
+#### 错误类型定义
+```typescript
+// ✅ 推荐：结构化错误处理
+// 基础错误类
+export abstract class BaseError extends Error {
+  abstract readonly code: string;
+  abstract readonly category: 'validation' | 'business' | 'system' | 'network';
+  
+  constructor(
+    message: string,
+    public readonly context?: Record<string, any>
+  ) {
+    super(message);
+    this.name = this.constructor.name;
+  }
+}
+
+// 具体错误类
+export class ValidationError extends BaseError {
+  readonly code = 'VALIDATION_ERROR';
+  readonly category = 'validation';
+  
+  constructor(
+    field: string,
+    value: any,
+    expected: string
+  ) {
+    super(`Field '${field}' validation failed: ${expected}, got ${value}`, {
+      field,
+      value,
+      expected,
+    });
+  }
+}
+
+export class BusinessRuleError extends BaseError {
+  readonly code = 'BUSINESS_RULE_ERROR';
+  readonly category = 'business';
+  
+  constructor(rule: string, reason: string) {
+    super(`Business rule violation: ${rule} - ${reason}`, {
+      rule,
+      reason,
+    });
+  }
+}
+```
+
+#### 错误处理策略
+```typescript
+// ✅ 推荐：分层错误处理
+// 表示层错误处理
+export function useErrorHandler() {
+  const handleError = useCallback((error: Error) => {
+    if (error instanceof BaseError) {
+      switch (error.category) {
+        case 'validation':
+          toast.error(`验证错误: ${error.message}`);
+          break;
+        case 'business':
+          toast.error(`操作失败: ${error.message}`);
+          break;
+        case 'system':
+          toast.error('系统错误，请稍后重试');
+          break;
+        case 'network':
+          toast.error('网络错误，请检查连接');
+          break;
+      }
+    } else {
+      toast.error('未知错误，请联系客服');
+    }
+    
+    // 错误上报
+    if (process.env.NODE_ENV === 'production') {
+      reportError(error);
+    }
+  }, []);
+  
+  return { handleError };
+}
+
+// 应用层错误处理
+export class CalculatorUseCase {
+  async calculate(expression: string): Promise<number> {
+    try {
+      this.validateExpression(expression);
+      return this.engine.evaluate(expression);
+    } catch (error) {
+      if (error instanceof ValidationError) {
+        throw error; // 验证错误直接传递
+      }
+      
+      // 业务错误转换为领域错误
+      throw new BusinessRuleError(
+        'CALCULATION_FAILED',
+        `无法计算表达式: ${expression}`
+      );
+    }
+  }
+  
+  private validateExpression(expression: string): void {
+    if (!expression.trim()) {
+      throw new ValidationError('expression', expression, 'non-empty string');
+    }
+    
+    if (expression.length > 1000) {
+      throw new ValidationError('expression', expression, 'max 1000 characters');
+    }
+  }
+}
+```
+
+---
+
+## 🧪 测试要求
+
+### 1. 测试分层
+每个层级的测试重点不同：
+
+```typescript
+// 领域层测试：纯函数测试
+describe('CalculatorEngine', () => {
+  it('should calculate correctly', () => {
+    const engine = new CalculatorEngine();
+    expect(engine.evaluate('2 + 3')).toBe(5);
+  });
+});
+
+// 应用层测试：业务逻辑测试
+describe('CalculatorUseCase', () => {
+  it('should save calculation to history', async () => {
+    const mockStorage = createMockStorage();
+    const useCase = new CalculatorUseCase(engine, mockStorage);
+    
+    await useCase.calculate('2 + 3');
+    
+    expect(mockStorage.save).toHaveBeenCalledWith({
+      expression: '2 + 3',
+      result: 5,
+      timestamp: expect.any(Date),
+    });
+  });
+});
+
+// UI 测试：组件交互测试
+describe('Calculator', () => {
+  it('should update display when number clicked', () => {
+    render(<Calculator />);
+    
+    fireEvent.click(screen.getByText('5'));
+    fireEvent.click(screen.getByText('3'));
+    
+    expect(screen.getByDisplayValue('53')).toBeInTheDocument();
+  });
+});
+```
+
+### 2. Mock 规范
+```typescript
+// ✅ 推荐：清晰的 Mock 定义
+// __mocks__/StorageService.ts
+export class MockStorageService implements StorageService {
+  private storage: Map<string, any> = new Map();
+  
+  async save<T>(key: string, data: T): Promise<void> {
+    this.storage.set(key, data);
+  }
+  
+  async load<T>(key: string): Promise<T | null> {
+    return this.storage.get(key) || null;
+  }
+  
+  async remove(key: string): Promise<void> {
+    this.storage.delete(key);
+  }
+  
+  // 测试辅助方法
+  clear(): void {
+    this.storage.clear();
+  }
+  
+  getAll(): Record<string, any> {
+    return Object.fromEntries(this.storage);
+  }
+}
+```
+
+---
+
+通过遵循这些严格的架构要求和开发规范，Twinkle Tools 将具有高度的可维护性、可扩展性和团队协作效率。
+
 ---
 
 ## 📝 TypeScript 编码规范

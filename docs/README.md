@@ -8,10 +8,12 @@
 - [项目概述](./overview.md) - 项目简介和核心特性
 - [技术栈](./tech-stack.md) - 技术选型和依赖说明
 - [项目结构](./project-structure.md) - 目录结构详解
+- [架构设计原则](./architecture-principles.md) - 架构设计和解耦规范
 
 ### 开发指南
 - [环境搭建](./setup.md) - 开发环境配置指南
 - [开发规范](./coding-standards.md) - 代码规范和最佳实践
+- [开发工作流程](./development-workflow.md) - 完整开发流程规范
 - [组件库](./components.md) - UI 组件库使用指南
 
 ### 模块文档
