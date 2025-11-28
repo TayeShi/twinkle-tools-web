@@ -31,6 +31,16 @@ const tools = [
     implemented: true
   },
   {
+    title: "🎨 图片编辑",
+    description: "✨ 强大的在线图片编辑工具，支持调整、滤镜和变换",
+    icon: ImageIcon,
+    href: "/image-editor",
+    badge: "图片工具",
+    color: "from-blue-500 to-blue-600",
+    emoji: "🎨",
+    implemented: true
+  },
+  {
     title: "🧮 计算器",
     description: "⚡️ 支持基础运算和科学计算的智能计算器",
     icon: Calculator,
