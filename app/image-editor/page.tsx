@@ -1,6 +1,8 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import Link from 'next/link';
+import { ArrowLeft, Image, Edit3, Palette, Settings, Save } from 'lucide-react';
 import { Toolbar } from '@/modules/image-editor/components/Toolbar';
 import { ImageEditorCanvas } from '@/modules/image-editor/components/ImageEditorCanvas';
 import { PreviewPanel } from '@/modules/image-editor/components/PreviewPanel';
@@ -11,6 +13,7 @@ import { useImageEditor } from '@/modules/image-editor/hooks/useImageEditor';
 import { ImageProcessor } from '@/modules/image-editor/domain/ImageProcessor';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 const ImageEditorPage = () => {
   const { 
@@ -104,11 +107,90 @@ const ImageEditorPage = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800">
-      {/* Toolbar */}
-      <Toolbar />
+      {/* Header */}
+      <header className="border-b bg-gradient-to-r from-white/90 to-purple-50/90 dark:from-slate-900/90 dark:to-purple-950/90 backdrop-blur-sm shadow-lg">
+        <div className="container mx-auto px-4 py-6">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-6">
+              <Link href="/">
+                <Button variant="ghost" size="lg" className="hover:bg-blue-50 dark:hover:bg-blue-950 hover:text-blue-600 dark:hover:text-blue-400 transition-all duration-300 hover:scale-105 px-6 py-3">
+                  <ArrowLeft className="mr-3 h-5 w-5" />
+                  🏠 返回首页
+                </Button>
+              </Link>
+              <div className="flex items-center space-x-4">
+                <div className="h-12 w-12 rounded-full bg-gradient-to-r from-purple-500 to-pink-600 flex items-center justify-center shadow-lg hover:scale-110 transition-transform duration-300">
+                  <Edit3 className="h-6 w-6 text-white" />
+                </div>
+                <div>
+                  <h1 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-600 dark:from-purple-400 dark:to-pink-400">
+                    🖼️ 图片编辑器
+                  </h1>
+                  <p className="text-sm text-slate-600 dark:text-slate-400 mt-1">
+                    🎨 专业的图片编辑工具，支持参数调整和滤镜效果
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </header>
 
       {/* Main Content */}
       <main className="container mx-auto px-4 py-8">
+        {/* 工具介绍 */}
+        <div className="mb-8">
+          <Card className="border-2 border-purple-200 dark:border-purple-800 bg-gradient-to-br from-purple-50 to-pink-50 dark:from-purple-950 dark:to-pink-950 hover:shadow-xl transition-all duration-500">
+            <CardHeader className="pb-4">
+              <CardTitle className="flex items-center space-x-4">
+                <div className="p-3 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 hover:scale-110 transition-transform duration-300">
+                  <Edit3 className="h-6 w-6 text-white" />
+                </div>
+                <div>
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-600 dark:from-purple-400 dark:to-pink-400 text-2xl font-bold">
+                    🎨 专业图片编辑工具
+                  </span>
+                  <p className="text-slate-600 dark:text-slate-400 mt-2 text-lg">
+                    ✨ 提供丰富的图片调整参数和滤镜效果，让您轻松编辑图片 🚀
+                  </p>
+                </div>
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="pt-0">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div className="flex items-center space-x-4 p-4 rounded-lg bg-blue-50 dark:bg-blue-950/50 group hover:bg-blue-100 dark:hover:bg-blue-900/50 transition-all duration-300 hover:scale-105 border-2 border-transparent hover:border-blue-200 dark:hover:border-blue-800">
+                  <div className="p-3 rounded-full bg-gradient-to-r from-blue-500 to-cyan-500 group-hover:scale-110 transition-transform duration-300">
+                    <Settings className="h-5 w-5 text-white" />
+                  </div>
+                  <div>
+                    <span className="text-blue-700 dark:text-blue-300 font-bold text-lg block">⚙️ 参数调整</span>
+                    <span className="text-blue-600 dark:text-blue-400 text-sm">亮度、对比度、饱和度等</span>
+                  </div>
+                </div>
+                
+                <div className="flex items-center space-x-4 p-4 rounded-lg bg-green-50 dark:bg-green-950/50 group hover:bg-green-100 dark:hover:bg-green-900/50 transition-all duration-300 hover:scale-105 border-2 border-transparent hover:border-green-200 dark:hover:border-green-800">
+                  <div className="p-3 rounded-full bg-gradient-to-r from-green-500 to-teal-500 group-hover:scale-110 transition-transform duration-300">
+                    <Palette className="h-5 w-5 text-white" />
+                  </div>
+                  <div>
+                    <span className="text-green-700 dark:text-green-300 font-bold text-lg block">🎨 滤镜效果</span>
+                    <span className="text-green-600 dark:text-green-400 text-sm">复古、黑白、冷色调等</span>
+                  </div>
+                </div>
+                
+                <div className="flex items-center space-x-4 p-4 rounded-lg bg-purple-50 dark:bg-purple-950/50 group hover:bg-purple-100 dark:hover:bg-purple-900/50 transition-all duration-300 hover:scale-105 border-2 border-transparent hover:border-purple-200 dark:hover:border-purple-800">
+                  <div className="p-3 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 group-hover:scale-110 transition-transform duration-300">
+                    <Save className="h-5 w-5 text-white" />
+                  </div>
+                  <div>
+                    <span className="text-purple-700 dark:text-purple-300 font-bold text-lg block">💾 导出设置</span>
+                    <span className="text-purple-600 dark:text-purple-400 text-sm">多种格式和质量选项</span>
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
         {/* PC Layout: Grid */}
         <div className="hidden lg:grid lg:grid-cols-3 gap-6">
           {/* Left Column: Canvas or Preview */}
