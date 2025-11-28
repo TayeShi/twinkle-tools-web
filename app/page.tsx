@@ -1,3 +1,5 @@
+'use client';
+
 import Link from "next/link";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -19,13 +21,24 @@ import {
 
 const tools = [
   {
+    title: "🖼️ 图片压缩",
+    description: "🎯 高效的在线图片压缩和格式转换工具",
+    icon: ImageIcon,
+    href: "/image-compressor",
+    badge: "图片工具",
+    color: "from-pink-500 to-pink-600",
+    emoji: "🖼️",
+    implemented: true
+  },
+  {
     title: "🧮 计算器",
     description: "⚡️ 支持基础运算和科学计算的智能计算器",
     icon: Calculator,
     href: "/calculator",
     badge: "数学工具",
     color: "from-blue-500 to-blue-600",
-    emoji: "🧮"
+    emoji: "🧮",
+    implemented: false
   },
   {
     title: "🎨 颜色选择器",
@@ -34,7 +47,8 @@ const tools = [
     href: "/color-picker",
     badge: "设计工具",
     color: "from-purple-500 to-purple-600",
-    emoji: "🎨"
+    emoji: "🎨",
+    implemented: false
   },
   {
     title: "📝 文本格式化",
@@ -43,7 +57,8 @@ const tools = [
     href: "/text-formatter",
     badge: "文本工具",
     color: "from-green-500 to-green-600",
-    emoji: "📝"
+    emoji: "📝",
+    implemented: false
   },
   {
     title: "⏰ 倒计时器",
@@ -52,16 +67,8 @@ const tools = [
     href: "/timer",
     badge: "时间工具",
     color: "from-orange-500 to-orange-600",
-    emoji: "⏰"
-  },
-  {
-    title: "🖼️ 图片压缩",
-    description: "🎯 高效的在线图片压缩和格式转换工具",
-    icon: ImageIcon,
-    href: "/image-compressor",
-    badge: "图片工具",
-    color: "from-pink-500 to-pink-600",
-    emoji: "🖼️"
+    emoji: "⏰",
+    implemented: false
   },
   {
     title: "#️⃣ 哈希生成器",
@@ -70,7 +77,8 @@ const tools = [
     href: "/hash-generator",
     badge: "加密工具",
     color: "from-gray-500 to-gray-600",
-    emoji: "#️⃣"
+    emoji: "#️⃣",
+    implemented: false
   },
   {
     title: "📱 二维码生成器",
@@ -79,7 +87,8 @@ const tools = [
     href: "/qr-code",
     badge: "生成工具",
     color: "from-indigo-500 to-indigo-600",
-    emoji: "📱"
+    emoji: "📱",
+    implemented: false
   },
   {
     title: "🔐 密码生成器",
@@ -88,7 +97,8 @@ const tools = [
     href: "/password-generator",
     badge: "安全工具",
     color: "from-red-500 to-red-600",
-    emoji: "🔐"
+    emoji: "🔐",
+    implemented: false
   },
   {
     title: "💻 JSON格式化",
@@ -97,7 +107,8 @@ const tools = [
     href: "/json-formatter",
     badge: "开发工具",
     color: "from-cyan-500 to-cyan-600",
-    emoji: "💻"
+    emoji: "💻",
+    implemented: false
   },
   {
     title: "🔄 Base64编解码",
@@ -106,7 +117,8 @@ const tools = [
     href: "/base64",
     badge: "编码工具",
     color: "from-teal-500 to-teal-600",
-    emoji: "🔄"
+    emoji: "🔄",
+    implemented: false
   },
   {
     title: "🗄️ SQL格式化",
@@ -115,7 +127,8 @@ const tools = [
     href: "/sql-formatter",
     badge: "数据库工具",
     color: "from-amber-500 to-amber-600",
-    emoji: "🗄️"
+    emoji: "🗄️",
+    implemented: false
   },
   {
     title: "🔗 URL编解码",
@@ -124,11 +137,19 @@ const tools = [
     href: "/url-encoder",
     badge: "网络工具",
     color: "from-lime-500 to-lime-600",
-    emoji: "🔗"
+    emoji: "🔗",
+    implemented: false
   }
 ];
 
 export default function Home() {
+  // 排序工具列表：已实现的工具排在前面
+  const sortedTools = [...tools].sort((a, b) => {
+    if (a.implemented && !b.implemented) return -1;
+    if (!a.implemented && b.implemented) return 1;
+    return 0;
+  });
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800">
       {/* Header */}
@@ -203,28 +224,43 @@ export default function Home() {
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {tools.map((tool, index) => {
+            {sortedTools.map((tool, index) => {
               const IconComponent = tool.icon;
+              
               return (
-                <Card key={index} className="group hover:shadow-xl transition-all duration-300 hover:-translate-y-2 cursor-pointer border-2 border-transparent hover:border-blue-200 dark:hover:border-purple-700">
+                <Card 
+                  key={index} 
+                  className={`group hover:shadow-xl transition-all duration-300 hover:-translate-y-2 cursor-pointer border-2 border-transparent hover:border-blue-200 dark:hover:border-purple-700 ${!tool.implemented ? 'opacity-90' : ''}`}
+                >
                   <Link href={tool.href}>
                     <CardHeader className="pb-3">
-                      <div className="flex items-center justify-between mb-3">
-                        <div className={`p-3 rounded-xl bg-gradient-to-br ${tool.color} bg-opacity-10 group-hover:bg-opacity-20 transition-all duration-300 group-hover:scale-110`}>
-                          <IconComponent className={`h-6 w-6 text-white`} />
+                      <div className="flex items-center justify-between mb-2">
+                        <div className="flex items-center space-x-3">
+                          <div className={`p-3 rounded-xl bg-gradient-to-br ${tool.color} bg-opacity-10 group-hover:bg-opacity-20 transition-all duration-300 group-hover:scale-110`}>
+                            <IconComponent className={`h-6 w-6 text-white`} />
+                          </div>
+                          <CardTitle className="text-xl font-bold text-slate-900 dark:text-slate-100 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-blue-600 group-hover:to-purple-600 dark:group-hover:from-blue-400 dark:group-hover:to-purple-400">
+                            {tool.title.replace(/^[\u{1F000}-\u{1FFFF}]/u, '')}
+                          </CardTitle>
                         </div>
-                        <Badge variant="secondary" className="text-xs bg-gradient-to-r from-blue-100 to-purple-100 text-blue-700 dark:from-blue-900 dark:to-purple-900 dark:text-blue-300">
-                          {tool.badge}
-                        </Badge>
+                        <div className="flex items-center space-x-2">
+                          <Badge variant="secondary" className="text-xs bg-gradient-to-r from-blue-100 to-purple-100 text-blue-700 dark:from-blue-900 dark:to-purple-900 dark:text-blue-300">
+                            {tool.badge}
+                          </Badge>
+                        </div>
                       </div>
-                      <CardTitle className="text-lg font-semibold text-slate-900 dark:text-slate-100 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-blue-600 group-hover:to-purple-600 dark:group-hover:from-blue-400 dark:group-hover:to-purple-400">
-                        {tool.title}
-                      </CardTitle>
                     </CardHeader>
                     <CardContent>
                       <CardDescription className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
                         {tool.description}
                       </CardDescription>
+                      {!tool.implemented && (
+                        <div className="mt-3 p-2 rounded-lg bg-yellow-50 dark:bg-yellow-950/50 border border-yellow-200 dark:border-yellow-800">
+                          <p className="text-xs text-yellow-700 dark:text-yellow-400 font-medium">
+                            🔄 Coming Soon
+                          </p>
+                        </div>
+                      )}
                     </CardContent>
                   </Link>
                 </Card>

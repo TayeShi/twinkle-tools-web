@@ -204,7 +204,7 @@ export class BrowserCompressionEngine implements CompressionEngine {
   ): Promise<Blob> {
     return new Promise((resolve, reject) => {
       const mimeType = `image/${config.outputFormat}`;
-      let quality = config.quality !== undefined ? config.quality / 100 : 0.8;
+      const quality = config.quality !== undefined ? config.quality / 100 : 0.8;
 
       // JPEG 和 WebP 支持质量参数
       if (config.outputFormat !== 'png') {
