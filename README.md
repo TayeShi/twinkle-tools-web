@@ -4,12 +4,15 @@
 
 ## ✨ 特性
 
-- 🎨 **现代化设计** - 采用 Material Design 设计语言，界面美观直观
+- 🎨 **现代化设计** - 采用渐变色、emoji、微动效的现代化界面设计
+- 🌈 **情感化体验** - 通过色彩和emoji传达正确的情感状态，提升用户体验
 - 📱 **响应式布局** - 完美适配桌面端和移动端设备
 - ⚡ **高性能** - 基于 Next.js 14 的 App Router 和服务端渲染
 - 🔒 **安全可靠** - 本地数据处理，保护用户隐私
 - 🌙 **深色模式** - 支持浅色/深色主题切换
+- 🎭 **视觉层次** - 清晰的视觉层次，避免界面单调
 - 🛠 **丰富工具** - 涵盖开发、设计、文本处理等多个领域
+- ♿ **可访问性** - 确保所有用户都能获得良好体验
 
 ## 🚀 快速开始
 
@@ -80,6 +83,7 @@ bun run start
 - [环境搭建](./docs/setup.md) - 开发环境配置指南
 - [开发规范](./docs/coding-standards.md) - 代码规范和最佳实践
 - [开发工作流程](./docs/development-workflow.md) - 完整开发流程规范
+- [🎨 文案设计规范](./docs/content-design-standards.md) - 色彩、emoji、美化标准
 - [组件库](./docs/components.md) - UI 组件库使用指南
 
 ### 📦 模块文档
@@ -141,6 +145,8 @@ bun run start
 - 遵循 ESLint 和 Prettier 配置
 - 组件和函数使用 PascalCase 命名
 - 文件和变量使用 camelCase 命名
+- 🎨 遵循[文案设计规范](./docs/content-design-standards.md)，通过色彩和emoji美化界面
+- 🎭 确保界面美观且不单调，提升用户体验
 - 提交信息遵循 [Conventional Commits](https://www.conventionalcommits.org/) 规范
 
 ## 📄 许可证
