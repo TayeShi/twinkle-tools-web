@@ -13,13 +13,15 @@ interface ExportOptionsProps {
   onOptionsChange: (options: Partial<ExportOptionsType>) => void;
   onExport: () => void;
   isExporting: boolean;
+  disabled?: boolean;
 }
 
 export const ExportOptions = ({ 
   options, 
   onOptionsChange, 
   onExport, 
-  isExporting 
+  isExporting,
+  disabled = false
 }: ExportOptionsProps) => {
   return (
     <Card className="w-full bg-white/80 backdrop-blur-sm dark:bg-slate-900/80">
@@ -103,7 +105,7 @@ export const ExportOptions = ({
           <Button 
             className="w-full bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white font-medium py-6"
             onClick={onExport}
-            disabled={isExporting}
+            disabled={isExporting || disabled}
           >
             {isExporting ? (
               <>⏳ 导出中...</>

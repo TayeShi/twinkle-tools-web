@@ -1,9 +1,7 @@
 // 处理模式类型
 export type EditMode = 
-  | 'basic'      // 基础调整
-  | 'advanced'   // 专业调整
-  | 'filters'    // 滤镜效果
-  | 'transform'; // 变换操作
+  | 'basic'      // 参数设置
+  | 'filters';   // 滤镜效果
 
 // 图片处理参数类型
 export interface ImageAdjustments {
@@ -102,14 +100,14 @@ export interface ImageEditorState {
 
 // 默认调整参数
 export const defaultAdjustments: ImageAdjustments = {
-  brightness: 0,
-  contrast: 0,
-  saturation: 0,
-  temperature: 0,
-  hue: 0,
-  whiteBalance: 0,
-  shadows: 0,
-  highlights: 0
+  brightness: 50,
+  contrast: 50,
+  saturation: 50,
+  temperature: 50,
+  hue: 50,
+  whiteBalance: 50,
+  shadows: 50,
+  highlights: 50
 };
 
 // 默认导出选项

@@ -9,6 +9,8 @@ import { AdjustmentsPanel } from '@/modules/image-editor/components/AdjustmentsP
 import { FiltersPanel } from '@/modules/image-editor/components/FiltersPanel';
 import { useImageEditor } from '@/modules/image-editor/hooks/useImageEditor';
 import { ImageProcessor } from '@/modules/image-editor/domain/ImageProcessor';
+import { Button } from '@/components/ui/button';
+import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 const ImageEditorPage = () => {
   const { 
@@ -103,57 +105,79 @@ const ImageEditorPage = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800">
       {/* Toolbar */}
-      <Toolbar 
-        currentMode={state.editMode} 
-        onModeChange={setEditMode} 
-        onUndo={undo}
-        onRedo={redo}
-        onReset={resetAll}
-      />
+      <Toolbar />
 
       {/* Main Content */}
       <main className="container mx-auto px-4 py-8">
         {/* PC Layout: Grid */}
         <div className="hidden lg:grid lg:grid-cols-3 gap-6">
-          {/* Left Column: Canvas and Controls */}
+          {/* Left Column: Canvas or Preview */}
           <div className="col-span-2 space-y-6">
-            {/* Canvas Area */}
+            {/* Canvas Area (Upload) */}
+            {!state.originalImage && (
+              <div className="bg-white/80 backdrop-blur-sm dark:bg-slate-900/80 rounded-xl shadow-lg p-4 h-[500px]">
+                <ImageEditorCanvas onImageUpload={setOriginalImage} />
+              </div>
+            )}
+            
+            {/* Preview Area */}
+            {state.originalImage && (
+              <div className="bg-white/80 backdrop-blur-sm dark:bg-slate-900/80 rounded-xl shadow-lg p-4 h-[800px]">
+                <PreviewPanel previewUrl={previewUrl} />
+              </div>
+            )}
+          </div>
+
+          {/* Right Column: Controls */}
+          <div className="space-y-6">
+            {/* Edit Mode Tabs */}
             <div className="bg-white/80 backdrop-blur-sm dark:bg-slate-900/80 rounded-xl shadow-lg p-4">
-              <ImageEditorCanvas onImageUpload={setOriginalImage} />
+              <Tabs 
+                value={state.editMode} 
+                onValueChange={(value) => setEditMode(value as 'basic' | 'filters')}
+                className="w-full"
+              >
+                <TabsList className="w-full grid grid-cols-2">
+                  <TabsTrigger value="basic" className="text-sm">
+                    🎨 参数设置
+                  </TabsTrigger>
+                  <TabsTrigger value="filters" className="text-sm">
+                    🎭 滤镜效果
+                  </TabsTrigger>
+                </TabsList>
+              </Tabs>
             </div>
 
-            {/* Controls */}
+            {/* Adjustments or Filters */}
             <div className="space-y-4">
-              {/* Adjustments or Filters */}
-              {state.editMode === 'basic' || state.editMode === 'advanced' ? (
+              {state.editMode === 'basic' ? (
                 <AdjustmentsPanel 
-                  mode={state.editMode}
                   adjustments={state.adjustments}
                   onAdjustmentChange={updateAdjustment}
+                  disabled={!state.originalImage}
                 />
               ) : state.editMode === 'filters' ? (
                 <FiltersPanel 
                   currentFilter={state.filter}
                   onFilterChange={setFilter}
+                  disabled={!state.originalImage}
                 />
-              ) : (
-                <div className="bg-white/80 backdrop-blur-sm dark:bg-slate-900/80 rounded-xl shadow-lg p-4">
-                  <h3 className="text-lg font-semibold text-slate-900 dark:text-slate-100 mb-4">
-                    🔄 变换操作
-                  </h3>
-                  <p className="text-sm text-slate-500 dark:text-slate-400">
-                    变换功能开发中...
-                  </p>
-                </div>
-              )}
+              ) : null}
             </div>
-          </div>
 
-          {/* Right Column: Preview and Export */}
-          <div className="space-y-6">
-            {/* Preview */}
-            <div className="h-[400px]">
-              <PreviewPanel previewUrl={previewUrl} />
+            {/* Action Buttons */}
+            <div className="bg-white/80 backdrop-blur-sm dark:bg-slate-900/80 rounded-xl shadow-lg p-4">
+              <div className="grid grid-cols-3 gap-2 mb-4">
+                <Button variant="outline" size="sm" className="text-sm w-full" onClick={undo} disabled={!state.originalImage}>
+                  ⏪ 撤销
+                </Button>
+                <Button variant="outline" size="sm" className="text-sm w-full" onClick={redo} disabled={!state.originalImage}>
+                  ⏩ 重做
+                </Button>
+                <Button variant="outline" size="sm" className="text-sm w-full" onClick={resetAll} disabled={!state.originalImage}>
+                  🔄 重置
+                </Button>
+              </div>
             </div>
 
             {/* Export Options */}
@@ -162,45 +186,72 @@ const ImageEditorPage = () => {
               onOptionsChange={updateExportOptions}
               onExport={handleExport}
               isExporting={isExporting}
+              disabled={!state.originalImage}
             />
           </div>
         </div>
 
         {/* Mobile Layout: Stacked */}
         <div className="lg:hidden space-y-6">
-          {/* Canvas Area */}
+          {/* Canvas or Preview Area */}
+          {!state.originalImage ? (
+            <div className="bg-white/80 backdrop-blur-sm dark:bg-slate-900/80 rounded-xl shadow-lg p-4 h-[400px]">
+              <ImageEditorCanvas onImageUpload={setOriginalImage} />
+            </div>
+          ) : (
+            <div className="bg-white/80 backdrop-blur-sm dark:bg-slate-900/80 rounded-xl shadow-lg p-4 h-[600px]">
+              <PreviewPanel previewUrl={previewUrl} />
+            </div>
+          )}
+
+          {/* Edit Mode Tabs */}
           <div className="bg-white/80 backdrop-blur-sm dark:bg-slate-900/80 rounded-xl shadow-lg p-4">
-            <ImageEditorCanvas onImageUpload={setOriginalImage} />
+            <Tabs 
+              value={state.editMode} 
+              onValueChange={(value) => setEditMode(value as 'basic' | 'filters')}
+              className="w-full"
+            >
+              <TabsList className="w-full grid grid-cols-2">
+                <TabsTrigger value="basic" className="text-sm">
+                  🎨 参数设置
+                </TabsTrigger>
+                <TabsTrigger value="filters" className="text-sm">
+                  🎭 滤镜效果
+                </TabsTrigger>
+              </TabsList>
+            </Tabs>
           </div>
 
-          {/* Preview */}
-          <div className="h-[300px]">
-            <PreviewPanel previewUrl={previewUrl} />
-          </div>
-
-          {/* Controls */}
+          {/* Adjustments or Filters */}
           <div className="space-y-4">
-            {state.editMode === 'basic' || state.editMode === 'advanced' ? (
+            {state.editMode === 'basic' ? (
               <AdjustmentsPanel 
-                mode={state.editMode}
                 adjustments={state.adjustments}
                 onAdjustmentChange={updateAdjustment}
+                disabled={!state.originalImage}
               />
             ) : state.editMode === 'filters' ? (
               <FiltersPanel 
                 currentFilter={state.filter}
                 onFilterChange={setFilter}
+                disabled={!state.originalImage}
               />
-            ) : (
-              <div className="bg-white/80 backdrop-blur-sm dark:bg-slate-900/80 rounded-xl shadow-lg p-4">
-                <h3 className="text-lg font-semibold text-slate-900 dark:text-slate-100 mb-4">
-                  🔄 变换操作
-                </h3>
-                <p className="text-sm text-slate-500 dark:text-slate-400">
-                  变换功能开发中...
-                </p>
-              </div>
-            )}
+            ) : null}
+          </div>
+
+          {/* Action Buttons */}
+          <div className="bg-white/80 backdrop-blur-sm dark:bg-slate-900/80 rounded-xl shadow-lg p-4">
+            <div className="grid grid-cols-3 gap-2 mb-4">
+              <Button variant="outline" size="sm" className="text-sm w-full" onClick={undo} disabled={!state.originalImage}>
+                ⏪ 撤销
+              </Button>
+              <Button variant="outline" size="sm" className="text-sm w-full" onClick={redo} disabled={!state.originalImage}>
+                ⏩ 重做
+              </Button>
+              <Button variant="outline" size="sm" className="text-sm w-full" onClick={resetAll} disabled={!state.originalImage}>
+                🔄 重置
+              </Button>
+            </div>
           </div>
 
           {/* Export Options */}
@@ -209,6 +260,7 @@ const ImageEditorPage = () => {
             onOptionsChange={updateExportOptions}
             onExport={handleExport}
             isExporting={isExporting}
+            disabled={!state.originalImage}
           />
         </div>
       </main>

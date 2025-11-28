@@ -7,9 +7,10 @@ import type { FilterType } from '../types';
 interface FiltersPanelProps {
   currentFilter: FilterType;
   onFilterChange: (filter: FilterType) => void;
+  disabled?: boolean;
 }
 
-export const FiltersPanel = ({ currentFilter, onFilterChange }: FiltersPanelProps) => {
+export const FiltersPanel = ({ currentFilter, onFilterChange, disabled = false }: FiltersPanelProps) => {
   const filters: { value: FilterType; label: string; emoji: string }[] = [
     { value: 'none', label: '原图', emoji: '🖼️' },
     { value: 'vintage', label: '复古', emoji: '📻' },
@@ -40,6 +41,7 @@ export const FiltersPanel = ({ currentFilter, onFilterChange }: FiltersPanelProp
                 ? 'bg-gradient-to-r from-blue-500 to-purple-600 text-white' 
                 : 'bg-white dark:bg-slate-800'}`}
               onClick={() => onFilterChange(filter.value)}
+              disabled={disabled}
             >
               <span className="text-2xl">{filter.emoji}</span>
               <span>{filter.label}</span>

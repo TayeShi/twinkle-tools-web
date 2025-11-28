@@ -100,64 +100,74 @@ export class ImageProcessor {
       let g = data[i + 1];
       let b = data[i + 2];
       
-      // 亮度调整
-      r += adjustments.brightness * 2.55;
-      g += adjustments.brightness * 2.55;
-      b += adjustments.brightness * 2.55;
+      // 亮度调整：0-100 对应 -255 到 255
+      const brightnessValue = (adjustments.brightness - 50) * 5.1;
+      r += brightnessValue;
+      g += brightnessValue;
+      b += brightnessValue;
       
-      // 对比度调整
-      const contrastFactor = (259 * (adjustments.contrast + 255)) / (255 * (259 - adjustments.contrast));
+      // 对比度调整：0-100 对应原来的 -100 到 100
+      const contrastValue = adjustments.contrast - 50;
+      const contrastFactor = (259 * (contrastValue + 255)) / (255 * (259 - contrastValue));
       r = contrastFactor * (r - 128) + 128;
       g = contrastFactor * (g - 128) + 128;
       b = contrastFactor * (b - 128) + 128;
       
-      // 饱和度调整
+      // 饱和度调整：0-100 对应 0 到 2 的饱和度倍数
       const gray = 0.2989 * r + 0.5870 * g + 0.1140 * b;
-      r = gray + (r - gray) * (1 + adjustments.saturation / 100);
-      g = gray + (g - gray) * (1 + adjustments.saturation / 100);
-      b = gray + (b - gray) * (1 + adjustments.saturation / 100);
+      const saturationValue = (adjustments.saturation - 50) / 50;
+      r = gray + (r - gray) * (1 + saturationValue);
+      g = gray + (g - gray) * (1 + saturationValue);
+      b = gray + (b - gray) * (1 + saturationValue);
       
-      // 色温调整
-      if (adjustments.temperature > 0) {
+      // 色温调整：0-100 对应原来的 -100 到 100
+      const tempValue = adjustments.temperature - 50;
+      if (tempValue > 0) {
         // 暖色
-        r += adjustments.temperature * 2.55;
-        g += adjustments.temperature * 1.27;
+        r += tempValue * 5.1;
+        g += tempValue * 2.54;
       } else {
         // 冷色
-        b += Math.abs(adjustments.temperature) * 2.55;
-        g += Math.abs(adjustments.temperature) * 1.27;
+        b += Math.abs(tempValue) * 5.1;
+        g += Math.abs(tempValue) * 2.54;
       }
       
-      // 色调调整
-      const hueRadians = (adjustments.hue * Math.PI) / 180;
-      const cosHue = Math.cos(hueRadians);
-      const sinHue = Math.sin(hueRadians);
+      // 色调调整：0-100 对应 -180° 到 180°
+      const hueValue = (adjustments.hue - 50) * 3.6;
+      if (hueValue !== 0) {
+        const hueRadians = (hueValue * Math.PI) / 180;
+        const cosHue = Math.cos(hueRadians);
+        const sinHue = Math.sin(hueRadians);
+        
+        const newR = 0.299 * r + 0.587 * g + 0.114 * b +
+                     0.701 * r * cosHue + 0.587 * g * cosHue - 0.299 * b * cosHue +
+                     0.168 * r * sinHue - 0.330 * g * sinHue + 0.162 * b * sinHue;
+        
+        const newG = 0.299 * r + 0.587 * g + 0.114 * b +
+                     -0.299 * r * cosHue + 0.413 * g * cosHue + 0.299 * b * cosHue +
+                     -0.328 * r * sinHue + 0.035 * g * sinHue + 0.293 * b * sinHue;
+        
+        const newB = 0.299 * r + 0.587 * g + 0.114 * b +
+                     -0.300 * r * cosHue - 0.588 * g * cosHue + 0.886 * b * cosHue +
+                     1.250 * r * sinHue - 1.050 * g * sinHue - 0.200 * b * sinHue;
+        
+        r = newR;
+        g = newG;
+        b = newB;
+      }
       
-      const newR = 0.299 * r + 0.587 * g + 0.114 * b +
-                   0.701 * r * cosHue + 0.587 * g * cosHue - 0.299 * b * cosHue +
-                   0.168 * r * sinHue - 0.330 * g * sinHue + 0.162 * b * sinHue;
-      
-      const newG = 0.299 * r + 0.587 * g + 0.114 * b +
-                   -0.299 * r * cosHue + 0.413 * g * cosHue + 0.299 * b * cosHue +
-                   -0.328 * r * sinHue + 0.035 * g * sinHue + 0.293 * b * sinHue;
-      
-      const newB = 0.299 * r + 0.587 * g + 0.114 * b +
-                   -0.300 * r * cosHue - 0.588 * g * cosHue + 0.886 * b * cosHue +
-                   1.250 * r * sinHue - 1.050 * g * sinHue - 0.200 * b * sinHue;
-      
-      r = newR;
-      g = newG;
-      b = newB;
-      
-      // 白平衡调整
-      const whiteBalanceFactor = 1 + adjustments.whiteBalance / 100;
+      // 白平衡调整：0-100 对应 0 到 2 的倍数
+      const whiteBalanceValue = (adjustments.whiteBalance - 50) / 50;
+      const whiteBalanceFactor = 1 + whiteBalanceValue;
       r *= whiteBalanceFactor;
       g *= whiteBalanceFactor;
       b *= whiteBalanceFactor;
       
-      // 阴影和高光调整
-      const shadowFactor = 1 + adjustments.shadows / 100;
-      const highlightFactor = 1 - adjustments.highlights / 100;
+      // 阴影和高光调整：0-100 对应原来的 -100 到 100
+      const shadowValue = (adjustments.shadows - 50) / 50;
+      const highlightValue = (adjustments.highlights - 50) / 50;
+      const shadowFactor = 1 + shadowValue;
+      const highlightFactor = 1 - highlightValue;
       
       const avg = (r + g + b) / 3;
       if (avg < 128) {

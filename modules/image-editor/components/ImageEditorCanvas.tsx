@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef, useCallback } from 'react';
+import { useState, useRef, useCallback, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 
 interface ImageEditorCanvasProps {
@@ -11,6 +11,14 @@ export const ImageEditorCanvas = ({ onImageUpload }: ImageEditorCanvasProps) => 
   const [isDragging, setIsDragging] = useState(false);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  // 确保 canvas 初始宽度为 0，显示上传文案
+  useEffect(() => {
+    if (canvasRef.current) {
+      canvasRef.current.width = 0;
+      canvasRef.current.height = 0;
+    }
+  }, []);
 
   // 处理图片加载
   const handleImageLoad = useCallback((image: HTMLImageElement) => {
