@@ -171,9 +171,9 @@ export default function Home() {
   });
 
   return (
-    <div className="min-h-screen bg-slate-900 dark:bg-black">
+    <div className="min-h-screen bg-white dark:bg-black">
       {/* Header */}
-      <header className="border-b border-slate-800 bg-slate-900/95 backdrop-blur-sm">
+      <header className="border-b border-slate-200 dark:border-slate-800 bg-white/95 dark:bg-slate-900/95 backdrop-blur-sm">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-2">
@@ -185,13 +185,13 @@ export default function Home() {
               </h1>
             </div>
             <nav className="hidden md:flex items-center space-x-6">
-              <Link href="#" className="text-sm font-medium text-slate-400 hover:text-cyan-400 transition-colors">
+              <Link href="#" className="text-sm font-medium text-slate-600 dark:text-slate-400 hover:text-cyan-400 transition-colors">
                 🏠 首页
               </Link>
-              <Link href="#tools" className="text-sm font-medium text-slate-400 hover:text-blue-400 transition-colors">
+              <Link href="#tools" className="text-sm font-medium text-slate-600 dark:text-slate-400 hover:text-blue-400 transition-colors">
                 🛠️ 工具集
               </Link>
-              <Link href="#about" className="text-sm font-medium text-slate-400 hover:text-lime-400 transition-colors">
+              <Link href="#about" className="text-sm font-medium text-slate-600 dark:text-slate-400 hover:text-lime-400 transition-colors">
                 📖 关于
               </Link>
             </nav>
@@ -200,15 +200,15 @@ export default function Home() {
       </header>
 
       {/* Hero Section */}
-      <section className="py-20 px-4 bg-gradient-to-b from-slate-900 to-black">
+      <section className="py-20 px-4 bg-gradient-to-b from-white to-slate-50 dark:from-slate-950 dark:to-black">
         <div className="container mx-auto text-center">
           <div className="mb-6">
             <span className="text-4xl md:text-6xl text-cyan-400">🌟</span>
           </div>
-          <h2 className="text-4xl md:text-6xl font-bold text-white mb-6">
+          <h2 className="text-4xl md:text-6xl font-bold text-slate-900 dark:text-white mb-6">
             ⚡ 实用工具集合 ✨
           </h2>
-          <p className="text-xl text-slate-300 max-w-2xl mx-auto mb-8">
+          <p className="text-xl text-slate-600 dark:text-slate-300 max-w-2xl mx-auto mb-8">
             🎨 为开发者和设计师精心打造的在线工具集，提供便捷、高效的日常工具服务
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -218,7 +218,7 @@ export default function Home() {
                 开始使用
               </Link>
             </Button>
-            <Button size="lg" variant="outline" className="px-8 border-slate-600 text-slate-300 hover:bg-slate-800 hover:text-white transition-all duration-300 hover:scale-105" asChild>
+            <Button size="lg" variant="outline" className="px-8 border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white transition-all duration-300 hover:scale-105" asChild>
               <Link href="#about">
                 <span className="mr-2">📖</span>
                 了解更多
@@ -229,14 +229,14 @@ export default function Home() {
       </section>
 
       {/* Tools Grid */}
-      <section id="tools" className="py-16 px-4 bg-slate-800">
+      <section id="tools" className="py-16 px-4 bg-white dark:bg-black">
         <div className="container mx-auto">
           <div className="text-center mb-12">
             <div className="text-4xl mb-4 text-cyan-400">🛠️</div>
-            <h3 className="text-3xl font-bold text-cyan-400 mb-4">
+            <h3 className="text-3xl font-bold text-slate-900 dark:text-cyan-400 mb-4">
               ⭐ 精选工具集
             </h3>
-            <p className="text-lg text-slate-300 max-w-2xl mx-auto">
+            <p className="text-lg text-slate-600 dark:text-slate-300 max-w-2xl mx-auto">
               🎨 涵盖开发、设计、文本处理等多个领域的实用工具，让工作更高效 ✨
             </p>
           </div>
@@ -248,7 +248,7 @@ export default function Home() {
               return (
                 <Card 
                   key={index} 
-                  className={`group hover:shadow-xl transition-all duration-300 hover:-translate-y-2 cursor-pointer border-2 border-slate-700 bg-slate-900/50 backdrop-blur-sm hover:border-cyan-600 ${!tool.implemented ? 'opacity-90' : ''}`}
+                  className={`group hover:shadow-xl transition-all duration-300 hover:-translate-y-2 cursor-pointer border-2 border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900/50 backdrop-blur-sm hover:border-cyan-600 ${!tool.implemented ? 'opacity-90' : ''}`}
                 >
                   <Link href={tool.href}>
                     <CardHeader className="pb-3">
@@ -257,23 +257,23 @@ export default function Home() {
                           <div className={`p-3 rounded-xl bg-gradient-to-r ${tool.color} group-hover:scale-110 transition-all duration-300 shadow-lg shadow-cyan-500/25`}>
                             <IconComponent className={`h-6 w-6 text-white`} />
                           </div>
-                          <CardTitle className="text-xl font-bold text-white group-hover:text-cyan-400 transition-colors duration-300">
+                          <CardTitle className="text-xl font-bold text-slate-900 dark:text-white group-hover:text-cyan-400 transition-colors duration-300">
                             {tool.title.replace(/^[\u{1F000}-\u{1FFFF}]/u, '')}
                           </CardTitle>
                         </div>
                         <div className="flex items-center space-x-2">
-                          <Badge variant="secondary" className="text-xs bg-slate-800 text-cyan-400 border-slate-600">
+                          <Badge variant="secondary" className="text-xs bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-cyan-400 border-slate-200 dark:border-slate-600">
                             {tool.badge}
                           </Badge>
                         </div>
                       </div>
                     </CardHeader>
                     <CardContent>
-                      <CardDescription className="text-sm text-slate-300 leading-relaxed">
+                      <CardDescription className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
                         {tool.description}
                       </CardDescription>
                       {!tool.implemented && (
-                        <div className="mt-3 p-2 rounded-lg bg-slate-800/50 border border-slate-600">
+                        <div className="mt-3 p-2 rounded-lg bg-slate-100 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-600">
                           <p className="text-xs text-lime-400 font-medium">
                             🔄 Coming Soon
                           </p>
@@ -289,51 +289,51 @@ export default function Home() {
       </section>
 
       {/* Features Section */}
-      <section id="about" className="py-16 px-4 bg-slate-900">
+      <section id="about" className="py-16 px-4 bg-slate-50 dark:bg-slate-950">
         <div className="container mx-auto">
           <div className="text-center mb-12">
             <div className="text-4xl mb-4 text-lime-400">🎯</div>
-            <h3 className="text-3xl font-bold text-cyan-400 mb-4">
+            <h3 className="text-3xl font-bold text-slate-900 dark:text-cyan-400 mb-4">
               ⭐ 为什么选择 Twinkle Tools?
             </h3>
-            <p className="text-lg text-slate-300">
+            <p className="text-lg text-slate-600 dark:text-slate-300">
               🚀 为您提供卓越的开发体验和工具服务
             </p>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="group p-6 rounded-2xl bg-slate-900/50 backdrop-blur-sm border-2 border-slate-700 group-hover:border-cyan-600 transition-all duration-300 hover:shadow-xl hover:-translate-y-2 shadow-cyan-500/10">
+            <div className="group p-6 rounded-2xl bg-slate-50 dark:bg-slate-900/50 backdrop-blur-sm border-2 border-slate-200 dark:border-slate-700 group-hover:border-cyan-600 transition-all duration-300 hover:shadow-xl hover:-translate-y-2 shadow-cyan-500/10">
               <div className="h-14 w-14 mx-auto mb-4 rounded-full bg-gradient-to-r from-cyan-500 to-blue-600 flex items-center justify-center group-hover:scale-110 transition-transform duration-300 shadow-lg shadow-cyan-500/25">
                 <Zap className="h-7 w-7 text-white" />
               </div>
-              <h4 className="text-xl font-semibold mb-2 text-white group-hover:text-cyan-400 transition-colors">
+              <h4 className="text-xl font-semibold mb-2 text-slate-900 dark:text-white group-hover:text-cyan-400 transition-colors">
                 ⚡ 快速便捷
               </h4>
-              <p className="text-slate-300 leading-relaxed">
+              <p className="text-slate-600 dark:text-slate-300 leading-relaxed">
                 🎯 无需安装，即开即用，提供毫秒级响应的流畅体验
               </p>
             </div>
             
-            <div className="group p-6 rounded-2xl bg-slate-900/50 backdrop-blur-sm border-2 border-slate-700 group-hover:border-emerald-600 transition-all duration-300 hover:shadow-xl hover:-translate-y-2 shadow-emerald-500/10">
+            <div className="group p-6 rounded-2xl bg-slate-50 dark:bg-slate-900/50 backdrop-blur-sm border-2 border-slate-200 dark:border-slate-700 group-hover:border-emerald-600 transition-all duration-300 hover:shadow-xl hover:-translate-y-2 shadow-emerald-500/10">
               <div className="h-14 w-14 mx-auto mb-4 rounded-full bg-gradient-to-r from-emerald-500 to-green-600 flex items-center justify-center group-hover:scale-110 transition-transform duration-300 shadow-lg shadow-emerald-500/25">
                 <Shield className="h-7 w-7 text-white" />
               </div>
-              <h4 className="text-xl font-semibold mb-2 text-white group-hover:text-emerald-400 transition-colors">
+              <h4 className="text-xl font-semibold mb-2 text-slate-900 dark:text-white group-hover:text-emerald-400 transition-colors">
                 🛡️ 安全可靠
               </h4>
-              <p className="text-slate-300 leading-relaxed">
+              <p className="text-slate-600 dark:text-slate-300 leading-relaxed">
                 🔒 本地处理数据，保护您的隐私安全，绝不上传任何文件
               </p>
             </div>
             
-            <div className="group p-6 rounded-2xl bg-slate-900/50 backdrop-blur-sm border-2 border-slate-700 group-hover:border-lime-600 transition-all duration-300 hover:shadow-xl hover:-translate-y-2 shadow-lime-500/10">
+            <div className="group p-6 rounded-2xl bg-slate-50 dark:bg-slate-900/50 backdrop-blur-sm border-2 border-slate-200 dark:border-slate-700 group-hover:border-lime-600 transition-all duration-300 hover:shadow-xl hover:-translate-y-2 shadow-lime-500/10">
               <div className="h-14 w-14 mx-auto mb-4 rounded-full bg-gradient-to-r from-lime-500 to-yellow-600 flex items-center justify-center group-hover:scale-110 transition-transform duration-300 shadow-lg shadow-lime-500/25">
                 <Settings className="h-7 w-7 text-white" />
               </div>
-              <h4 className="text-xl font-semibold mb-2 text-white group-hover:text-lime-400 transition-colors">
+              <h4 className="text-xl font-semibold mb-2 text-slate-900 dark:text-white group-hover:text-lime-400 transition-colors">
                 🌟 持续更新
               </h4>
-              <p className="text-slate-300 leading-relaxed">
+              <p className="text-slate-600 dark:text-slate-300 leading-relaxed">
                 📈 不断添加新工具，倾听用户反馈，满足更多开发需求
               </p>
             </div>
@@ -342,12 +342,12 @@ export default function Home() {
       </section>
 
       {/* Footer */}
-      <footer className="border-t border-slate-800 bg-black py-12 px-4">
+      <footer className="border-t border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-black py-12 px-4">
         <div className="container mx-auto text-center">
           <div className="mb-4">
             <span className="text-3xl text-cyan-400">✨</span>
           </div>
-          <p className="text-slate-400 text-lg font-medium">
+          <p className="text-slate-600 dark:text-slate-400 text-lg font-medium">
             🎉 © 2024 Twinkle Tools. 致力于提供优质的在线工具服务，让开发更轻松 🚀
           </p>
           <div className="mt-4 flex justify-center space-x-4">
