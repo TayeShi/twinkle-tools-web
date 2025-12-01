@@ -41,6 +41,16 @@ const tools = [
     implemented: true
   },
   {
+    title: "📄 PDF转图片",
+    description: "🔄 将PDF文件转换为高质量图片，支持多种格式",
+    icon: FileText,
+    href: "/pdf-to-image",
+    badge: "文档工具",
+    color: "from-purple-500 to-purple-600",
+    emoji: "📄",
+    implemented: true
+  },
+  {
     title: "🧮 计算器",
     description: "⚡️ 支持基础运算和科学计算的智能计算器",
     icon: Calculator,
