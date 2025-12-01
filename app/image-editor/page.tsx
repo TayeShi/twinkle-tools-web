@@ -1,8 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import Link from 'next/link';
-import { ArrowLeft, Image, Edit3, Palette, Settings, Save } from 'lucide-react';
+import { Image, Edit3, Palette, Settings, Save } from 'lucide-react';
 import { Toolbar } from '@/modules/image-editor/components/Toolbar';
 import { ImageEditorCanvas } from '@/modules/image-editor/components/ImageEditorCanvas';
 import { PreviewPanel } from '@/modules/image-editor/components/PreviewPanel';
@@ -14,6 +13,7 @@ import { ImageProcessor } from '@/modules/image-editor/domain/ImageProcessor';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Header } from '@/components/Header';
 
 const ImageEditorPage = () => {
   const { 
@@ -108,33 +108,12 @@ const ImageEditorPage = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800">
       {/* Header */}
-      <header className="border-b bg-gradient-to-r from-white/90 to-purple-50/90 dark:from-slate-900/90 dark:to-purple-950/90 backdrop-blur-sm shadow-lg">
-        <div className="container mx-auto px-4 py-6">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-6">
-              <Link href="/">
-                <Button variant="ghost" size="lg" className="hover:bg-blue-50 dark:hover:bg-blue-950 hover:text-blue-600 dark:hover:text-blue-400 transition-all duration-300 hover:scale-105 px-6 py-3">
-                  <ArrowLeft className="mr-3 h-5 w-5" />
-                  🏠 返回首页
-                </Button>
-              </Link>
-              <div className="flex items-center space-x-4">
-                <div className="h-12 w-12 rounded-full bg-gradient-to-r from-purple-500 to-pink-600 flex items-center justify-center shadow-lg hover:scale-110 transition-transform duration-300">
-                  <Edit3 className="h-6 w-6 text-white" />
-                </div>
-                <div>
-                  <h1 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-600 dark:from-purple-400 dark:to-pink-400">
-                    🖼️ 图片编辑器
-                  </h1>
-                  <p className="text-sm text-slate-600 dark:text-slate-400 mt-1">
-                    🎨 专业的图片编辑工具，支持参数调整和滤镜效果
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </header>
+      <Header
+        icon={<Edit3 className="h-5 w-5 sm:h-6 sm:w-6 text-white" />}
+        title="🖼️ 图片编辑器"
+        description="🎨 专业的图片编辑工具，支持参数调整和滤镜效果"
+        iconGradient="from-purple-500 to-pink-600"
+      />
 
       {/* Main Content */}
       <main className="container mx-auto px-4 py-8">
