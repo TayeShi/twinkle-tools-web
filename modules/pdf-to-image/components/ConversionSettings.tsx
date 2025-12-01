@@ -21,13 +21,13 @@ interface ConversionSettingsProps {
 
 export function ConversionSettings({ config, onConfigChange, disabled = false }: ConversionSettingsProps) {
   return (
-    <Card className="border-2 border-purple-200 dark:border-purple-800 bg-gradient-to-br from-purple-50 to-pink-50 dark:from-purple-950 dark:to-pink-950 hover:shadow-lg transition-all duration-300">
+    <Card className="border-2 border-purple-200 dark:border-purple-800 bg-white dark:bg-slate-900 hover:shadow-lg transition-all duration-300">
       <CardHeader>
         <CardTitle className="flex items-center space-x-3 text-xl">
-          <div className="p-2 rounded-full bg-gradient-to-r from-purple-500 to-pink-600 text-white">
+          <div className="p-2 rounded-full bg-purple-600 text-white">
             <Settings className="h-5 w-5" />
           </div>
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-600 dark:from-purple-400 dark:to-pink-400">
+          <span className="text-purple-600 dark:text-purple-400">
             ⚙️ 转换设置
           </span>
         </CardTitle>

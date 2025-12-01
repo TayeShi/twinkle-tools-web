@@ -20,10 +20,10 @@ export function Header({
   icon, 
   title, 
   description, 
-  iconGradient = 'from-purple-500 to-pink-600' 
+  iconGradient = 'bg-gradient-to-r from-cyan-400 to-blue-500' 
 }: HeaderProps) {
   return (
-    <header className="border-b bg-gradient-to-r from-white/90 to-purple-50/90 dark:from-slate-900/90 dark:to-purple-950/90 backdrop-blur-sm shadow-lg">
+    <header className="border-b border-slate-800 bg-slate-900/95 backdrop-blur-sm shadow-lg">
       <div className="container mx-auto px-4 py-4 sm:py-6">
         <div className="flex flex-wrap items-center justify-between gap-4">
           <div className="flex flex-wrap items-center gap-4 sm:gap-6">
@@ -32,7 +32,7 @@ export function Header({
               <Button 
                 variant="ghost" 
                 size="sm" 
-                className="hover:bg-blue-50 dark:hover:bg-blue-950 hover:text-blue-600 dark:hover:text-blue-400 transition-all duration-300 hover:scale-105 px-4 py-2 sm:px-6 sm:py-3"
+                className="hover:bg-slate-800 text-slate-300 hover:text-cyan-400 transition-all duration-300 hover:scale-105 px-4 py-2 sm:px-6 sm:py-3"
               >
                 <ArrowLeft className="mr-2 h-4 w-4 sm:mr-3 sm:h-5 sm:w-5" />
                 <span className="text-sm sm:text-base">🏠 返回首页</span>
@@ -42,16 +42,16 @@ export function Header({
             {/* 工具信息 */}
             <div className="flex items-center space-x-3 sm:space-x-4">
               {/* 工具图标 */}
-              <div className={`h-10 w-10 sm:h-12 sm:w-12 rounded-full bg-gradient-to-r ${iconGradient} flex items-center justify-center shadow-lg hover:scale-110 transition-transform duration-300`}>
+              <div className={`h-10 w-10 sm:h-12 sm:w-12 rounded-full bg-gradient-to-r from-cyan-400 to-blue-500 flex items-center justify-center shadow-lg hover:scale-110 transition-transform duration-300 shadow-cyan-500/25`}>
                 {icon}
               </div>
               
               {/* 工具标题和描述 */}
               <div className="space-y-1">
-                <h1 className="text-2xl sm:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-600 dark:from-purple-400 dark:to-pink-400">
+                <h1 className="text-2xl sm:text-3xl font-bold text-cyan-400">
                   {title}
                 </h1>
-                <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 mt-0 sm:mt-1 truncate max-w-[200px] sm:max-w-none">
+                <p className="text-xs sm:text-sm text-slate-400 mt-0 sm:mt-1 truncate max-w-[200px] sm:max-w-none">
                   {description}
                 </p>
               </div>

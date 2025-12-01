@@ -52,49 +52,49 @@ export function ImageUploader({
   return (
     <div className="space-y-4">
       {/* 拖拽上传区域 */}
-      <Card className="border-2 border-blue-200 dark:border-blue-800 bg-gradient-to-br from-blue-50 to-purple-50 dark:from-blue-950 dark:to-purple-950">
+      <Card className="border-2 border-cyan-600 bg-slate-900/50 backdrop-blur-sm">
         <CardContent className="p-6">
           <div
             {...getRootProps()}
             className={cn(
               "border-2 border-dashed rounded-lg p-8 text-center cursor-pointer transition-all duration-300",
-              "hover:border-blue-400 hover:bg-blue-100/50 dark:hover:bg-blue-900/30 hover:scale-[1.02]",
-              isDragActive && "border-blue-500 bg-blue-100/70 dark:bg-blue-900/50 scale-[1.02]",
+              "hover:border-cyan-400 hover:bg-cyan-950/30 hover:scale-[1.02]",
+              isDragActive && "border-cyan-400 bg-cyan-950/50 scale-[1.02]",
               (disabled || files.length >= maxFiles) && "cursor-not-allowed opacity-50"
             )}
           >
             <input {...getInputProps()} />
-            <div className="mx-auto h-16 w-16 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center mb-4">
+            <div className="mx-auto h-16 w-16 rounded-full bg-gradient-to-r from-cyan-500 to-blue-600 flex items-center justify-center mb-4 shadow-lg shadow-cyan-500/25">
               <Upload className="h-8 w-8 text-white" />
             </div>
             
             {isDragActive ? (
               <div className="space-y-2">
-                <p className="text-xl font-semibold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400">
+                <p className="text-xl font-semibold text-cyan-400">
                   🎯 拖放图片到这里...
                 </p>
-                <p className="text-sm text-blue-600 dark:text-blue-400">✨ 释放鼠标即可添加文件</p>
+                <p className="text-sm text-cyan-400">✨ 释放鼠标即可添加文件</p>
               </div>
             ) : (
               <div className="space-y-3">
-                <p className="text-xl font-semibold text-slate-700 dark:text-slate-300">
+                <p className="text-xl font-semibold text-slate-300">
                   🚀 拖放图片到这里，或点击选择文件
                 </p>
-                <p className="text-sm text-slate-600 dark:text-slate-400">
+                <p className="text-sm text-slate-400">
                   📂 支持 JPG、PNG、WebP、GIF 等格式，最大 50MB
                 </p>
                 <div className="flex items-center justify-center space-x-2">
-                  <span className="text-lg font-bold text-blue-600 dark:text-blue-400">{files.length}</span>
-                  <span className="text-sm text-slate-600 dark:text-slate-400">/</span>
-                  <span className="text-sm text-slate-600 dark:text-slate-400">{maxFiles}</span>
-                  <span className="text-sm text-blue-600 dark:text-blue-400">个文件</span>
+                  <span className="text-lg font-bold text-cyan-400">{files.length}</span>
+                  <span className="text-sm text-slate-400">/</span>
+                  <span className="text-sm text-slate-400">{maxFiles}</span>
+                  <span className="text-sm text-cyan-400">个文件</span>
                 </div>
               </div>
             )}
             
             <Button 
               variant="outline" 
-              className="mt-6 border-2 border-blue-200 hover:border-blue-400 hover:bg-blue-50 dark:hover:bg-blue-950 transition-all duration-300 hover:scale-105"
+              className="mt-6 border-2 border-cyan-600 hover:border-cyan-400 hover:bg-cyan-950 transition-all duration-300 hover:scale-105"
               disabled={disabled || files.length >= maxFiles}
             >
               📁 选择图片
@@ -105,17 +105,17 @@ export function ImageUploader({
 
       {/* 已选择的文件列表 */}
       {files.length > 0 && (
-        <Card className="border-2 border-green-200 dark:border-green-800 bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-950 dark:to-emerald-950">
+        <Card className="border-2 border-emerald-600 bg-slate-900/50 backdrop-blur-sm">
           <CardContent className="p-6">
             <div className="flex items-center justify-between mb-6">
-              <h3 className="text-xl font-semibold text-transparent bg-clip-text bg-gradient-to-r from-green-600 to-emerald-600 dark:from-green-400 dark:to-emerald-400">
+              <h3 className="text-xl font-semibold text-emerald-400">
                 📁 已选择的图片
               </h3>
               <div className="flex items-center space-x-2">
-                <span className="px-3 py-1 rounded-full bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-300 text-sm font-medium">
+                <span className="px-3 py-1 rounded-full bg-emerald-900 text-emerald-300 text-sm font-medium">
                   🎯 {files.length} 个文件
                 </span>
-                <span className="px-3 py-1 rounded-full bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300 text-sm font-medium">
+                <span className="px-3 py-1 rounded-full bg-cyan-900 text-cyan-300 text-sm font-medium">
                   📦 {formatFileSize(files.reduce((acc, file) => acc + file.size, 0))}
                 </span>
               </div>
@@ -124,9 +124,9 @@ export function ImageUploader({
               {files.map((file) => (
                 <div
                   key={file.id}
-                  className="relative group border-2 border-green-200 dark:border-green-700 rounded-xl overflow-hidden bg-white/50 dark:bg-slate-900/50 backdrop-blur-sm hover:shadow-lg transition-all duration-300 hover:scale-[1.02]"
+                  className="relative group border-2 border-emerald-600 rounded-xl overflow-hidden bg-slate-800/50 backdrop-blur-sm hover:shadow-lg transition-all duration-300 hover:scale-[1.02]"
                 >
-                  <div className="aspect-square relative bg-gradient-to-br from-green-100 to-emerald-100 dark:from-green-900/50 dark:to-emerald-900/50">
+                  <div className="aspect-square relative bg-emerald-900/50">
                     <img
                       src={file.preview}
                       alt={file.name}
@@ -142,21 +142,21 @@ export function ImageUploader({
                     </button>
                     
                     {/* 文件状态指示器 */}
-                    <div className="absolute top-3 left-3 p-2 rounded-full bg-green-500/90 text-white">
+                    <div className="absolute top-3 left-3 p-2 rounded-full bg-emerald-500/90 text-white">
                       <CheckCircle className="h-4 w-4" />
                     </div>
                   </div>
                   
-                  <div className="p-4 bg-gradient-to-r from-green-50/50 to-emerald-50/50 dark:from-green-950/50 dark:to-emerald-950/50">
-                    <p className="text-sm font-semibold text-slate-700 dark:text-slate-300 truncate mb-1" title={file.name}>
+                  <div className="p-4 bg-emerald-950/50">
+                    <p className="text-sm font-semibold text-slate-300 truncate mb-1" title={file.name}>
                       📎 {file.name}
                     </p>
                     <div className="flex items-center justify-between">
-                      <span className="text-xs text-green-600 dark:text-green-400 font-medium">
+                      <span className="text-xs text-emerald-400 font-medium">
                         📏 {formatFileSize(file.size)}
                       </span>
                       {file.dimensions && (
-                        <span className="text-xs text-blue-600 dark:text-blue-400 font-medium">
+                        <span className="text-xs text-cyan-400 font-medium">
                           📐 {file.dimensions.width}×{file.dimensions.height}
                         </span>
                       )}

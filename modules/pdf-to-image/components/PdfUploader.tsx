@@ -50,7 +50,7 @@ export function PdfUploader({ selectedFile, pageCount, onFileSelected, onStartCo
   };
 
   return (
-    <Card className="border-2 border-blue-200 dark:border-blue-800 bg-gradient-to-br from-blue-50 to-purple-50 dark:from-blue-950 dark:to-purple-950 hover:shadow-xl transition-all duration-500">
+    <Card className="border-2 border-blue-200 dark:border-blue-800 bg-white dark:bg-slate-900 hover:shadow-xl transition-all duration-500">
       <CardContent className="p-8">
         {!selectedFile ? (
           <div
@@ -65,11 +65,11 @@ export function PdfUploader({ selectedFile, pageCount, onFileSelected, onStartCo
           >
             <input {...getInputProps()} />
             <div className="flex flex-col items-center justify-center space-y-6">
-              <div className="p-6 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-lg hover:scale-110 transition-transform duration-300">
+              <div className="p-6 rounded-full bg-purple-600 text-white shadow-lg hover:scale-110 transition-transform duration-300">
                 <FileUp className="h-12 w-12" />
               </div>
               <div className="space-y-3">
-                <h3 className="text-xl sm:text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400">
+                <h3 className="text-xl sm:text-2xl font-bold text-purple-600 dark:text-purple-400">
                   📁 上传PDF文件
                 </h3>
                 <p className="text-sm sm:text-base text-slate-600 dark:text-slate-400 max-w-md mx-auto">
@@ -93,7 +93,7 @@ export function PdfUploader({ selectedFile, pageCount, onFileSelected, onStartCo
                   type="button"
                   variant="outline"
                   size="lg"
-                  className="w-full bg-gradient-to-r from-white to-blue-50 dark:from-slate-900 dark:to-blue-950 border-2 border-blue-300 dark:border-blue-700 hover:border-blue-500 dark:hover:border-blue-500 transition-all duration-300"
+                  className="w-full border-2 border-blue-300 dark:border-blue-700 hover:border-blue-500 dark:hover:border-blue-500 transition-all duration-300"
                   disabled={disabled}
                 >
                   <FileText className="mr-3 h-5 w-5" />
@@ -104,13 +104,13 @@ export function PdfUploader({ selectedFile, pageCount, onFileSelected, onStartCo
           </div>
         ) : (
           <div className="space-y-6">
-            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between p-6 rounded-xl bg-gradient-to-r from-green-50 to-blue-50 dark:from-green-950 dark:to-blue-950 border-2 border-green-200 dark:border-green-800">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between p-6 rounded-xl bg-green-50 dark:bg-green-950/30 border-2 border-green-200 dark:border-green-800">
               <div className="flex items-center space-x-4 mb-4 sm:mb-0">
-                <div className="p-4 rounded-full bg-gradient-to-r from-green-500 to-blue-600 text-white shadow-lg">
+                <div className="p-4 rounded-full bg-green-600 text-white shadow-lg">
                   <CheckCircle2 className="h-8 w-8" />
                 </div>
                 <div className="space-y-2">
-                  <h3 className="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-green-600 to-blue-600 dark:from-green-400 dark:to-blue-400">
+                  <h3 className="text-xl font-bold text-green-600 dark:text-green-400">
                     ✅ 文件已选择
                   </h3>
                   <div className="space-y-1">
@@ -135,7 +135,7 @@ export function PdfUploader({ selectedFile, pageCount, onFileSelected, onStartCo
                   type="button"
                   variant="destructive"
                   size="sm"
-                  className="w-full sm:w-auto bg-gradient-to-r from-red-500 to-orange-600 hover:from-red-600 hover:to-orange-700 transition-all duration-300 hover:scale-105"
+                  className="w-full sm:w-auto hover:scale-105 transition-all duration-300"
                   onClick={() => onReset?.()}
                   disabled={disabled}
                 >
@@ -147,7 +147,7 @@ export function PdfUploader({ selectedFile, pageCount, onFileSelected, onStartCo
                     type="button"
                     variant="default"
                     size="sm"
-                    className="w-full sm:w-auto bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 transition-all duration-300 hover:scale-105"
+                    className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 hover:scale-105 transition-all duration-300"
                     onClick={() => onStartConversion()}
                     disabled={disabled || isConverting}
                   >
@@ -161,7 +161,7 @@ export function PdfUploader({ selectedFile, pageCount, onFileSelected, onStartCo
               </div>
             </div>
             
-            <Alert className="border-2 border-blue-200 dark:border-blue-800 bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-950 dark:to-purple-950">
+            <Alert className="border-2 border-blue-200 dark:border-blue-800 bg-blue-50 dark:bg-blue-950/30">
               <AlertDescription className="flex items-center space-x-2 text-blue-700 dark:text-blue-300">
                 <span className="text-2xl">💡</span>
                 <div>

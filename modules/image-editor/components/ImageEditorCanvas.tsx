@@ -116,7 +116,7 @@ export const ImageEditorCanvas = ({ onImageUpload }: ImageEditorCanvasProps) => 
             <p className="text-sm text-slate-600 dark:text-slate-400 mb-4">
               支持 JPG、PNG、WebP 等格式
             </p>
-            <Button size="lg" className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700">
+            <Button size="lg" className="bg-blue-600 hover:bg-blue-700">
               📂 选择图片
             </Button>
           </div>

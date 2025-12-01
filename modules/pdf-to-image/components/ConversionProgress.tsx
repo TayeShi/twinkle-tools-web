@@ -59,7 +59,7 @@ export function ConversionProgress({ progress, status, error }: ConversionProgre
   const statusInfo = getStatusInfo();
 
   return (
-    <Card className="border-2 border-blue-200 dark:border-blue-800 bg-gradient-to-br from-blue-50 to-purple-50 dark:from-blue-950 dark:to-purple-950 hover:shadow-lg transition-all duration-300">
+    <Card className="border-2 border-blue-200 dark:border-blue-800 bg-white dark:bg-slate-900 hover:shadow-lg transition-all duration-300">
       <CardContent className="p-6">
         {/* 状态标题 */}
         <div className="flex items-center space-x-3 mb-4">
@@ -105,11 +105,11 @@ export function ConversionProgress({ progress, status, error }: ConversionProgre
             </span>
           </div>
           <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2.5">
-            <div
-              className="bg-gradient-to-r from-blue-500 to-purple-600 h-2.5 rounded-full transition-all duration-300"
-              style={{ width: `${(progress.currentPage / progress.totalPages) * 100}%` }}
-            ></div>
-          </div>
+          <div
+            className="bg-blue-600 h-2.5 rounded-full transition-all duration-300"
+            style={{ width: `${(progress.currentPage / progress.totalPages) * 100}%` }}
+          ></div>
+        </div>
         </div>
 
         {/* 预计剩余时间 */}

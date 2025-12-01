@@ -18,7 +18,7 @@ interface DownloadButtonProps {
 
 export function DownloadButton({ onDownloadAll, imageCount, disabled = false, isDownloading = false }: DownloadButtonProps) {
   return (
-    <Card className="border-2 border-green-200 dark:border-green-800 bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-950 dark:to-emerald-950 hover:shadow-lg transition-all duration-300">
+    <Card className="border-2 border-green-200 dark:border-green-800 bg-white dark:bg-slate-900 hover:shadow-lg transition-all duration-300">
       <CardContent className="p-6">
         <div className="flex flex-col items-center justify-center space-y-4">
           <div className="w-full">
@@ -26,7 +26,7 @@ export function DownloadButton({ onDownloadAll, imageCount, disabled = false, is
               onClick={onDownloadAll}
               disabled={disabled || imageCount === 0 || isDownloading}
               size="lg"
-              className="w-full bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 transition-all duration-300 hover:scale-105 px-8 py-4 text-lg shadow-lg"
+              className="w-full bg-green-600 hover:bg-green-700 transition-all duration-300 hover:scale-105 px-8 py-4 text-lg shadow-lg"
             >
               {isDownloading ? (
                 <>

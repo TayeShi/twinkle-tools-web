@@ -38,7 +38,7 @@ export function ImagePreview({ images, onDownloadSingle, isConverting = false, d
     <div className="space-y-6">
       {/* 标题和统计 */}
       <div className="flex items-center justify-between">
-        <h2 className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400">
+        <h2 className="text-2xl font-bold text-blue-600 dark:text-blue-400">
           🖼️ 转换结果
         </h2>
         {images.length > 0 && (
@@ -55,10 +55,10 @@ export function ImagePreview({ images, onDownloadSingle, isConverting = false, d
 
       {/* 空状态 */}
       {images.length === 0 && !isConverting && (
-        <Card className="border-2 border-gray-200 dark:border-gray-800 bg-gradient-to-br from-gray-50 to-slate-50 dark:from-gray-950 dark:to-slate-950">
+        <Card className="border-2 border-gray-200 dark:border-gray-800 bg-white dark:bg-slate-900">
           <CardContent className="p-12 text-center">
             <div className="flex flex-col items-center justify-center space-y-4">
-              <div className="p-6 rounded-full bg-gradient-to-r from-gray-400 to-slate-500 text-white">
+              <div className="p-6 rounded-full bg-gray-500 text-white">
                 <Eye className="h-12 w-12" />
               </div>
               <h3 className="text-xl font-bold text-slate-600 dark:text-slate-400">
@@ -74,13 +74,13 @@ export function ImagePreview({ images, onDownloadSingle, isConverting = false, d
 
       {/* 转换中状态 */}
       {isConverting && (
-        <Card className="border-2 border-blue-200 dark:border-blue-800 bg-gradient-to-br from-blue-50 to-purple-50 dark:from-blue-950 dark:to-purple-950">
+        <Card className="border-2 border-blue-200 dark:border-blue-800 bg-white dark:bg-slate-900">
           <CardContent className="p-12 text-center">
             <div className="flex flex-col items-center justify-center space-y-4">
-              <div className="p-6 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 text-white animate-pulse">
+              <div className="p-6 rounded-full bg-blue-600 text-white animate-pulse">
                 <div className="h-12 w-12 animate-spin rounded-full border-4 border-white border-t-transparent" />
               </div>
-              <h3 className="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400">
+              <h3 className="text-xl font-bold text-blue-600 dark:text-blue-400">
                 ⏳ 正在转换...
               </h3>
               <p className="text-slate-600 dark:text-slate-400 max-w-md mx-auto">
@@ -97,7 +97,7 @@ export function ImagePreview({ images, onDownloadSingle, isConverting = false, d
           {images.map((image) => (
             <Card
               key={image.id}
-              className="border-2 border-blue-200 dark:border-blue-800 bg-gradient-to-br from-white to-blue-50 dark:from-slate-900 dark:to-blue-950 hover:shadow-xl transition-all duration-300 hover:scale-105"
+              className="border-2 border-blue-200 dark:border-blue-800 bg-white dark:bg-slate-900 hover:shadow-xl transition-all duration-300 hover:scale-105"
             >
               <CardContent className="p-4">
                 {/* 图片预览 */}
@@ -169,7 +169,7 @@ export function ImagePreview({ images, onDownloadSingle, isConverting = false, d
                 <Button
                   onClick={() => onDownloadSingle(image)}
                   size="sm"
-                  className="flex items-center space-x-2 bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 transition-all duration-300 hover:scale-105"
+                  className="flex items-center space-x-2 bg-blue-600 hover:bg-blue-700 transition-all duration-300 hover:scale-105"
                   disabled={disabled}
                 >
                   <Download className="h-4 w-4" />

@@ -103,7 +103,7 @@ export const ExportOptions = ({
         {/* 导出按钮 */}
         <div className="pt-2">
           <Button 
-            className="w-full bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white font-medium py-6"
+            className="w-full bg-green-600 hover:bg-green-700 text-white font-medium py-6"
             onClick={onExport}
             disabled={isExporting || disabled}
           >

@@ -44,26 +44,26 @@ export default function PdfToImagePage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800">
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-900">
       {/* Header */}
       <Header
         icon={<FileText className="h-5 w-5 sm:h-6 sm:w-6 text-white" />}
         title="📄 PDF转图片工具"
         description="🎨 快速将PDF文件转换为高质量图片，支持多种格式和自定义设置"
-        iconGradient="from-purple-500 to-pink-600"
+        iconGradient="bg-purple-600"
       />
 
       <div className="container mx-auto px-4 py-8">
         {/* 工具介绍 */}
         <div className="mb-8">
-          <Card className="border-2 border-purple-200 dark:border-purple-800 bg-gradient-to-br from-purple-50 to-pink-50 dark:from-purple-950 dark:to-pink-950 hover:shadow-xl transition-all duration-500">
+          <Card className="border-2 border-purple-200 dark:border-purple-800 bg-white dark:bg-slate-900 hover:shadow-xl transition-all duration-500">
             <CardHeader className="pb-4">
               <CardTitle className="flex items-center space-x-4">
-                <div className="p-3 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 hover:scale-110 transition-transform duration-300">
+                <div className="p-3 rounded-full bg-purple-600 hover:scale-110 transition-transform duration-300">
                   <Zap className="h-6 w-6 text-white" />
                 </div>
                 <div>
-                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-600 dark:from-purple-400 dark:to-pink-400 text-2xl font-bold">
+                  <span className="text-purple-600 dark:text-purple-400 text-2xl font-bold">
                     ⚡ 智能PDF转图片工具
                   </span>
                   <p className="text-slate-600 dark:text-slate-400 mt-2 text-lg">
@@ -75,7 +75,7 @@ export default function PdfToImagePage() {
             <CardContent className="pt-0">
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div className="flex items-center space-x-4 p-4 rounded-lg bg-blue-50 dark:bg-blue-950/50 group hover:bg-blue-100 dark:hover:bg-blue-900/50 transition-all duration-300 hover:scale-105 border-2 border-transparent hover:border-blue-200 dark:hover:border-blue-800">
-                  <div className="p-3 rounded-full bg-gradient-to-r from-blue-500 to-cyan-500 group-hover:scale-110 transition-transform duration-300">
+                  <div className="p-3 rounded-full bg-blue-600 group-hover:scale-110 transition-transform duration-300">
                     <Settings className="h-5 w-5 text-white" />
                   </div>
                   <div>
@@ -85,7 +85,7 @@ export default function PdfToImagePage() {
                 </div>
                 
                 <div className="flex items-center space-x-4 p-4 rounded-lg bg-green-50 dark:bg-green-950/50 group hover:bg-green-100 dark:hover:bg-green-900/50 transition-all duration-300 hover:scale-105 border-2 border-transparent hover:border-green-200 dark:hover:border-green-800">
-                  <div className="p-3 rounded-full bg-gradient-to-r from-green-500 to-teal-500 group-hover:scale-110 transition-transform duration-300">
+                  <div className="p-3 rounded-full bg-green-600 group-hover:scale-110 transition-transform duration-300">
                     <Play className="h-5 w-5 text-white" />
                   </div>
                   <div>
@@ -95,7 +95,7 @@ export default function PdfToImagePage() {
                 </div>
                 
                 <div className="flex items-center space-x-4 p-4 rounded-lg bg-purple-50 dark:bg-purple-950/50 group hover:bg-purple-100 dark:hover:bg-purple-900/50 transition-all duration-300 hover:scale-105 border-2 border-transparent hover:border-purple-200 dark:hover:border-purple-800">
-                  <div className="p-3 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 group-hover:scale-110 transition-transform duration-300">
+                  <div className="p-3 rounded-full bg-purple-600 group-hover:scale-110 transition-transform duration-300">
                     <FileText className="h-5 w-5 text-white" />
                   </div>
                   <div>
@@ -158,11 +158,11 @@ export default function PdfToImagePage() {
             />
 
             {/* 使用提示 */}
-            <Card className="border-2 border-purple-200 dark:border-purple-800 bg-gradient-to-br from-purple-50 to-pink-50 dark:from-purple-950 dark:to-pink-950">
+            <Card className="border-2 border-purple-200 dark:border-purple-800 bg-white dark:bg-slate-900">
               <CardHeader>
                 <CardTitle className="text-lg flex items-center space-x-2">
                   <span className="text-2xl">💡</span>
-                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-600 dark:from-purple-400 dark:to-pink-400">
+                  <span className="text-purple-600 dark:text-purple-400">
                     📖 使用提示
                   </span>
                 </CardTitle>
@@ -211,7 +211,7 @@ export default function PdfToImagePage() {
             </Card>
 
             {/* 性能说明 */}
-            <Alert className="border-2 border-green-200 dark:border-green-800 bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-950 dark:to-emerald-950">
+            <Alert className="border-2 border-green-200 dark:border-green-800 bg-green-50 dark:bg-green-950/30">
               <AlertDescription className="flex items-center space-x-2">
                 <span className="text-2xl">🛡️</span>
                 <div>

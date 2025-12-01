@@ -38,7 +38,7 @@ export const FiltersPanel = ({ currentFilter, onFilterChange, disabled = false }
               key={filter.value}
               variant={currentFilter === filter.value ? 'default' : 'outline'}
               className={`flex flex-col items-center gap-1 py-4 text-sm ${currentFilter === filter.value 
-                ? 'bg-gradient-to-r from-blue-500 to-purple-600 text-white' 
+                ? 'bg-blue-600 text-white' 
                 : 'bg-white dark:bg-slate-800'}`}
               onClick={() => onFilterChange(filter.value)}
               disabled={disabled}
