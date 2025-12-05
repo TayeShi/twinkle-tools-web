@@ -1,0 +1,110 @@
+.footer {
+  background: var(--background);
+  border-top: 1px solid var(--border);
+  padding: 24px 0;
+  font-size: 14px;
+}
+
+.footer-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.footer-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+@media (min-width: 768px) {
+  .footer-content {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 32px;
+  }
+}
+
+.footer-logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  color: var(--foreground);
+}
+
+.footer-logo-icon {
+  width: 24px;
+  height: 24px;
+  background: var(--primary);
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.footer-logo-icon span {
+  color: white;
+  font-weight: bold;
+  font-size: 12px;
+}
+
+.footer-logo-text {
+  font-weight: 500;
+  color: var(--foreground);
+}
+
+.footer-links {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+@media (min-width: 768px) {
+  .footer-links {
+    flex-direction: row;
+    gap: 32px;
+  }
+}
+
+.footer-link {
+  text-decoration: none;
+  color: var(--secondary);
+  transition: color 0.3s ease;
+}
+
+.footer-link:hover {
+  color: var(--primary);
+}
+
+.footer-copyright {
+  color: var(--secondary);
+  font-size: 13px;
+}
+
+/* 暗黑主题样式 */
+.dark {
+  .footer {
+    background: var(--background);
+    border-top-color: var(--border);
+  }
+
+  .footer-logo-text {
+    color: var(--foreground);
+  }
+
+  .footer-link {
+    color: var(--secondary);
+  }
+
+  .footer-link:hover {
+    color: var(--primary);
+  }
+
+  .footer-copyright {
+    color: var(--secondary);
+  }
+}

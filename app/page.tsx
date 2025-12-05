@@ -1,64 +1,130 @@
-import Image from "next/image";
+import Link from "next/link";
+import "./page.scss";
+
+// 工具数据
+type Tool = {
+  id: string;
+  name: string;
+  description: string;
+  icon: string;
+  category: string;
+};
+
+// 模拟工具数据
+const tools: Tool[] = [
+  {
+    id: "json-formatter",
+    name: "JSON格式化工具",
+    description: "在线JSON格式化、验证、压缩和转换工具",
+    icon: "📋",
+    category: "开发工具"
+  },
+  {
+    id: "base64-encoder",
+    name: "Base64编码解码",
+    description: "在线Base64编码和解码工具",
+    icon: "🔤",
+    category: "开发工具"
+  },
+  {
+    id: "md5-generator",
+    name: "MD5加密工具",
+    description: "在线生成MD5哈希值",
+    icon: "🔒",
+    category: "安全工具"
+  },
+  {
+    id: "random-password",
+    name: "随机密码生成器",
+    description: "生成高强度随机密码",
+    icon: "🔑",
+    category: "安全工具"
+  },
+  {
+    id: "image-compressor",
+    name: "图片压缩工具",
+    description: "在线压缩图片大小，保持质量",
+    icon: "🖼️",
+    category: "图片工具"
+  },
+  {
+    id: "url-shortener",
+    name: "URL短链接生成器",
+    description: "将长URL转换为短链接",
+    icon: "🔗",
+    category: "网络工具"
+  }
+];
 
 export default function Home() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+    <div className="home">
+      <main className="container">
+        {/* 英雄区域 */}
+        <section className="hero">
+          <h1>欢迎使用 Twinkle Tools</h1>
+          <p>集合各种实用工具，为您的工作和生活提供便捷服务</p>
+        </section>
+
+        {/* 工具分类 */}
+        <section className="tool-section">
+          <h2>热门工具</h2>
+          
+          <div className="tool-grid">
+            {tools.map((tool) => (
+              <Link
+                key={tool.id}
+                href={`/tools/${tool.id}`}
+                className="tool-card"
+              >
+                <div className="icon">{tool.icon}</div>
+                <h3>{tool.name}</h3>
+                <p>{tool.description}</p>
+                <span className="category">{tool.category}</span>
+              </Link>
+            ))}
+          </div>
+        </section>
+
+        {/* 特性介绍 */}
+        <section className="features">
+          <h2>为什么选择 Twinkle Tools？</h2>
+          
+          <div className="features-grid">
+            <div className="feature-item">
+              <div className="icon">⚡</div>
+              <h3>快速高效</h3>
+              <p>所有工具都经过优化，提供快速的处理速度</p>
+            </div>
+            
+            <div className="feature-item">
+              <div className="icon">🔒</div>
+              <h3>安全可靠</h3>
+              <p>本地处理数据，保护您的隐私安全</p>
+            </div>
+            
+            <div className="feature-item">
+              <div className="icon">🎨</div>
+              <h3>简洁易用</h3>
+              <p>直观的用户界面，易于使用</p>
+            </div>
+          </div>
+        </section>
+
+        {/* 关于我们 */}
+        <section className="about">
+          <h2>关于 Twinkle Tools</h2>
+          <p>
+            Twinkle Tools 是一个免费的在线工具集合，致力于为用户提供便捷、高效的在线工具服务。
+            我们不断添加新的工具，满足不同用户的需求。
           </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
           <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+            href="/about"
+            className="btn"
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
+            了解更多
           </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
+        </section>
       </main>
     </div>
   );

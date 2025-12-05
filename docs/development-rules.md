@@ -170,7 +170,8 @@ bun prettier --write .
 
 ### 5.5 组件样式规范
 
-- 使用Tailwind CSS进行样式开发
+- UI组件优先使用Radix UI
+- 使用SCSS进行样式开发
 - 组件样式应封装在组件内部
 - 避免使用全局样式
 - 支持主题切换

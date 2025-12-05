@@ -135,7 +135,7 @@ export default function ThemeToggle() {
 
 ### 3.1 组件库选择
 
-项目使用Radix UI作为基础组件库，结合Tailwind CSS进行样式开发。
+项目UI组件优先使用Radix UI，并结合SCSS进行样式开发。
 
 ### 3.2 组件开发规范
 
@@ -170,12 +170,12 @@ export default function ThemeToggle() {
 
 #### 3.2.5 组件样式设计
 
-- 使用Tailwind CSS进行样式开发
+- 使用SCSS进行样式开发
 - 组件样式应封装在组件内部
 - 避免使用全局样式
 - 支持主题切换
 - 支持响应式设计
-- 使用CSS变量或Tailwind配置管理主题色
+- 使用CSS变量管理主题色
 
 #### 3.2.6 组件文档
 
