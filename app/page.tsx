@@ -27,6 +27,13 @@ const tools: Tool[] = [
     category: "开发工具"
   },
   {
+    id: "timestamp",
+    name: "时间戳转换工具",
+    description: "在线时间戳转换工具，支持时间戳与日期时间之间的双向转换",
+    icon: "⏰",
+    category: "开发工具"
+  },
+  {
     id: "md5-generator",
     name: "MD5加密工具",
     description: "在线生成MD5哈希值",
@@ -71,19 +78,19 @@ export default function Home() {
           <h2>热门工具</h2>
           
           <div className="tool-grid">
-            {tools.map((tool) => (
-              <Link
-                key={tool.id}
-                href={`/tools/${tool.id}`}
-                className="tool-card"
-              >
-                <div className="icon">{tool.icon}</div>
-                <h3>{tool.name}</h3>
-                <p>{tool.description}</p>
-                <span className="category">{tool.category}</span>
-              </Link>
-            ))}
-          </div>
+              {tools.map((tool) => (
+                <Link
+                  key={tool.id}
+                  href={tool.id === "timestamp" ? "/timestamp" : `/tools/${tool.id}`}
+                  className="tool-card"
+                >
+                  <div className="icon">{tool.icon}</div>
+                  <h3>{tool.name}</h3>
+                  <p>{tool.description}</p>
+                  <span className="category">{tool.category}</span>
+                </Link>
+              ))}
+            </div>
         </section>
 
         {/* 特性介绍 */}

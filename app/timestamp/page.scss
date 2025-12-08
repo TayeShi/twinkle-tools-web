@@ -1,0 +1,47 @@
+.timestamp-page {
+  background: var(--background);
+  color: var(--foreground);
+  min-height: 100vh;
+  font-family: var(--font-sans);
+  padding: 60px 0;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.timestamp-page h1 {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 16px;
+  color: var(--foreground);
+  text-align: center;
+}
+
+.timestamp-page p {
+  font-size: 1.125rem;
+  color: var(--secondary);
+  text-align: center;
+  margin-bottom: 40px;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* 暗黑主题样式 */
+.dark {
+  .timestamp-page {
+    background: var(--background);
+    color: var(--foreground);
+  }
+
+  .timestamp-page h1 {
+    color: var(--foreground);
+  }
+
+  .timestamp-page p {
+    color: var(--secondary);
+  }
+}
