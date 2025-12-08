@@ -96,6 +96,85 @@
   fill: currentColor;
 }
 
+/* 主题切换容器 */
+.theme-toggle-container {
+  position: relative;
+  display: inline-block;
+}
+
+/* 下拉菜单样式 */
+.theme-dropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-top: 8px;
+  background: var(--background);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  min-width: 180px;
+  overflow: hidden;
+  z-index: 100;
+  animation: fadeIn 0.2s ease-out;
+}
+
+/* 下拉菜单选项 */
+.theme-option {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--border);
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: var(--foreground);
+}
+
+.theme-option:last-child {
+  border-bottom: none;
+}
+
+.theme-option:hover {
+  background: var(--light);
+}
+
+/* 激活状态的选项 */
+.theme-option.active {
+  background: var(--light);
+  color: var(--primary);
+}
+
+/* 选项中的文字 */
+.theme-option span {
+  flex: 1;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+/* 选中状态的对勾图标 */
+.check-icon {
+  width: 16px;
+  height: 16px;
+  stroke: currentColor;
+  fill: currentColor;
+}
+
+/* 淡入动画 */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 /* 暗黑主题样式 */
 .dark {
   .header {
@@ -122,5 +201,28 @@
 
   .theme-toggle:hover {
     background: var(--dark);
+  }
+
+  /* 暗黑主题下的下拉菜单 */
+  .theme-dropdown {
+    background: var(--background);
+    border-color: var(--border);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  }
+
+  /* 暗黑主题下的选项 */
+  .theme-option {
+    border-bottom-color: var(--border);
+    color: var(--foreground);
+  }
+
+  .theme-option:hover {
+    background: var(--border);
+  }
+
+  /* 暗黑主题下的激活选项 */
+  .theme-option.active {
+    background: var(--border);
+    color: var(--primary);
   }
 }
