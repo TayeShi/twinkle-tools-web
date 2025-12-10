@@ -8,15 +8,18 @@ const Header = () => {
   // 主题类型：light, dark, system
   type Theme = 'light' | 'dark' | 'system';
 
-  // 初始化主题状态
-  const [theme, setTheme] = useState<Theme>(() => {
+  // 初始化主题状态，确保在服务器端不访问localStorage
+  const [theme, setTheme] = useState<Theme>('system');
+  
+  // 在客户端初始化时加载主题
+  useEffect(() => {
     if (typeof window !== 'undefined') {
       const savedTheme = localStorage.getItem('theme') as Theme;
-      // 如果没有保存的主题，默认使用system
-      return savedTheme || 'system';
+      if (savedTheme) {
+        setTheme(savedTheme);
+      }
     }
-    return 'system';
-  });
+  }, []);
 
   // 下拉菜单显示状态
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -24,8 +27,8 @@ const Header = () => {
   // 下拉菜单引用，用于检测点击外部
   const menuRef = useRef<HTMLDivElement>(null);
 
-  // 主题选项配置
-  const themeOptions = [
+  // 主题选项配置，明确指定类型
+  const themeOptions: Array<{ value: Theme; label: string; icon: React.ReactNode }> = [
     { value: 'light', label: '明亮', icon: (
       <svg className="theme-icon" fill="currentColor" viewBox="0 0 20 20" aria-label="明亮主题">
         <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z" />
@@ -64,7 +67,10 @@ const Header = () => {
   // 从本地存储加载主题偏好并应用到文档
   useEffect(() => {
     applyTheme();
-    localStorage.setItem('theme', theme);
+    // 确保只在浏览器环境中访问localStorage
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('theme', theme);
+    }
   }, [theme]);
 
   // 监听系统主题变化（当主题设置为system时）

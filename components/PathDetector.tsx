@@ -3,6 +3,7 @@
 import { usePathname } from 'next/navigation';
 import Header from './Header';
 import Footer from './Footer';
+import './PathDetector.scss';
 
 interface PathDetectorProps {
   children: React.ReactNode;
@@ -14,11 +15,11 @@ const PathDetector = ({ children, excludePaths }: PathDetectorProps) => {
   const shouldExclude = excludePaths.some(path => pathname.startsWith(path));
   
   return (
-    <>
+    <div className="path-detector">
       {!shouldExclude && <Header />}
-      {children}
+      <main>{children}</main>
       {!shouldExclude && <Footer />}
-    </>
+    </div>
   );
 };
 

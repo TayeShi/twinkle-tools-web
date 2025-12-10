@@ -81,7 +81,7 @@ export default function Home() {
               {tools.map((tool) => (
                 <Link
                   key={tool.id}
-                  href={tool.id === "timestamp" ? "/timestamp" : `/tools/${tool.id}`}
+                  href={tool.id === "timestamp" || tool.id === "image-compressor" ? `/${tool.id}` : `/tools/${tool.id}`}
                   className="tool-card"
                 >
                   <div className="icon">{tool.icon}</div>

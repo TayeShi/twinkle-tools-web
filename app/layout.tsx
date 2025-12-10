@@ -29,10 +29,10 @@ export default function RootLayout({
   return (
     <html lang="zh-CN">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <PathDetector excludePaths={excludePaths}>
-          <main className="flex-grow">{children}</main>
+          {children}
         </PathDetector>
       </body>
     </html>
