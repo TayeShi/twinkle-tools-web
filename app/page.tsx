@@ -34,6 +34,13 @@ const tools: Tool[] = [
     category: "开发工具"
   },
   {
+    id: "pdf-to-image",
+    name: "PDF转图片工具",
+    description: "在线将PDF文件转换为图片格式",
+    icon: "📄",
+    category: "图片工具"
+  },
+  {
     id: "md5-generator",
     name: "MD5加密工具",
     description: "在线生成MD5哈希值",
@@ -81,7 +88,7 @@ export default function Home() {
               {tools.map((tool) => (
                 <Link
                   key={tool.id}
-                  href={tool.id === "timestamp" || tool.id === "image-compressor" ? `/${tool.id}` : `/tools/${tool.id}`}
+                  href={`/${tool.id}`}
                   className="tool-card"
                 >
                   <div className="icon">{tool.icon}</div>

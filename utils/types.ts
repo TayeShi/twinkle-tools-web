@@ -33,3 +33,33 @@ export interface CompressedImage {
   /** 压缩后图片高度 */
   compressedHeight: number;
 }
+
+/**
+ * PDF转换图片参数接口
+ */
+export interface PdfConversionParams {
+  /** 输出图片格式 */
+  format: 'image/jpeg' | 'image/png' | 'image/webp';
+  /** 最大文件大小（MB） */
+  maxSize: number;
+  /** 是否转换为黑白 */
+  isBlackWhite: boolean;
+}
+
+/**
+ * 转换后的图片数据接口
+ */
+export interface ConvertedImage {
+  /** 图片URL */
+  imageUrl: string;
+  /** 图片格式 */
+  format: string;
+  /** 图片大小（字节） */
+  size: number;
+  /** 图片宽度 */
+  width: number;
+  /** 图片高度 */
+  height: number;
+  /** 页码 */
+  pageNumber: number;
+}

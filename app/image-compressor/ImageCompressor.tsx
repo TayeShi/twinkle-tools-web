@@ -321,9 +321,6 @@ const ImageCompressor = () => {
                   </button>
                 ))}
               </div>
-              <div className="range-display">
-                当前值: {compressionParams.maxSize === 0 ? '最优' : `${compressionParams.maxSize === 0.256 ? '256KB' : compressionParams.maxSize === 0.512 ? '512KB' : `${compressionParams.maxSize}MB`}`}
-              </div>
             </div>
             
             {/* 黑白转换 */}

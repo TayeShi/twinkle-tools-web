@@ -1,0 +1,734 @@
+// PDF转图片工具主样式
+
+// 变量定义
+$primary-color: #0070f3;
+$secondary-color: #6c757d;
+$success-color: #28a745;
+$danger-color: #dc3545;
+$light-color: #f8f9fa;
+$dark-color: #343a40;
+$border-color: #e1e4e8;
+$border-radius: 8px;
+$shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+$transition: all 0.3s ease;
+
+// 主容器
+.pdf-to-image {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  
+  h2 {
+    font-size: 24px;
+    color: $dark-color;
+    margin-bottom: 20px;
+  }
+  
+  h3 {
+    font-size: 18px;
+    color: $dark-color;
+    margin-bottom: 16px;
+  }
+}
+
+// 转换器容器
+.converter-container {
+  background: white;
+  border-radius: $border-radius;
+  box-shadow: $shadow;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+// PDF选择/信息区域
+.pdf-area {
+  padding: 20px;
+  border-bottom: 1px solid $border-color;
+}
+
+// 上传区域
+.upload-area {
+  border: 2px dashed $border-color;
+  border-radius: $border-radius;
+  padding: 40px;
+  text-align: center;
+  cursor: pointer;
+  transition: $transition;
+  background-color: white;
+  
+  &:hover {
+    border-color: $primary-color;
+    background-color: rgba(0, 112, 243, 0.05);
+  }
+  
+  .upload-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+  }
+  
+  .upload-icon {
+    font-size: 48px;
+    color: $secondary-color;
+  }
+  
+  .upload-text {
+    font-size: 16px;
+    color: $dark-color;
+    font-weight: 500;
+  }
+  
+  .upload-hint {
+    font-size: 14px;
+    color: $secondary-color;
+  }
+}
+
+// PDF信息区域
+.pdf-info {
+  background: $light-color;
+  border-radius: $border-radius;
+  padding: 16px;
+  
+  .pdf-info-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+    
+    h3 {
+      margin: 0;
+      font-size: 16px;
+    }
+  }
+  
+  .pdf-info-content {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .pdf-info-item {
+    display: flex;
+    
+    .pdf-info-label {
+      font-weight: 500;
+      color: $dark-color;
+      margin-right: 8px;
+    }
+    
+    .pdf-info-value {
+      color: $secondary-color;
+    }
+  }
+}
+
+// 主内容区域（预览和参数）
+.main-content {
+  display: grid;
+  grid-template-columns: 60% 40%;
+  
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+// 预览区域
+.preview-area {
+  padding: 20px;
+  border-right: 1px solid $border-color;
+  
+  @media (max-width: 768px) {
+    border-right: none;
+    border-bottom: 1px solid $border-color;
+  }
+  
+  .image-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 16px;
+    max-height: 600px;
+    overflow-y: auto;
+    
+    // 滚动条样式
+    &::-webkit-scrollbar {
+      width: 6px;
+    }
+    
+    &::-webkit-scrollbar-track {
+      background: $light-color;
+      border-radius: 3px;
+    }
+    
+    &::-webkit-scrollbar-thumb {
+      background: $border-color;
+      border-radius: 3px;
+      
+      &:hover {
+        background: $secondary-color;
+      }
+    }
+  }
+  
+  .empty-preview {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 200px;
+    background: $light-color;
+    border-radius: $border-radius;
+    color: $secondary-color;
+    text-align: center;
+  }
+}
+
+// 图片项
+.image-item {
+  background: white;
+  border: 1px solid $border-color;
+  border-radius: $border-radius;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  transition: $transition;
+  
+  &:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+  
+  .image-preview {
+    width: 100%;
+    height: 150px;
+    overflow: hidden;
+    cursor: pointer;
+    
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+      
+      &:hover {
+        transform: scale(1.05);
+      }
+    }
+  }
+  
+  .image-info {
+    padding: 12px;
+    
+    .image-name {
+      font-weight: 500;
+      color: $dark-color;
+      margin-bottom: 8px;
+      font-size: 14px;
+    }
+    
+    .image-meta {
+      font-size: 12px;
+      color: $secondary-color;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      margin-bottom: 12px;
+    }
+    
+    .image-actions {
+      display: flex;
+      justify-content: center;
+    }
+  }
+}
+
+// 参数设置区域
+.params-area {
+  padding: 20px;
+  background-color: $light-color;
+  
+  .params-container {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+}
+
+// 单个参数项
+.param-item {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  
+  label {
+    font-size: 14px;
+    font-weight: 500;
+    color: $dark-color;
+  }
+  
+  select,
+  input[type="number"] {
+    padding: 8px 12px;
+    border: 1px solid $border-color;
+    border-radius: $border-radius;
+    font-size: 14px;
+    transition: $transition;
+    
+    &:focus {
+      outline: none;
+      border-color: $primary-color;
+      box-shadow: 0 0 0 2px rgba(0, 112, 243, 0.1);
+    }
+  }
+  
+  // 复选框标签
+  .checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    user-select: none;
+    
+    input[type="checkbox"] {
+      cursor: pointer;
+    }
+  }
+  
+  // Segmented Control 样式
+  .segmented-control {
+    display: flex;
+    background: $light-color;
+    border: 2px solid $border-color;
+    border-radius: $border-radius;
+    overflow: hidden;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    
+    .segmented-item {
+      flex: 1;
+      padding: 10px 16px;
+      background: transparent;
+      border: none;
+      color: $secondary-color;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: $transition;
+      outline: none;
+      
+      &:hover {
+        background-color: rgba(0, 112, 243, 0.08);
+        color: $primary-color;
+      }
+      
+      &.active {
+        background: $primary-color;
+        color: white;
+      }
+    }
+  }
+  
+  // 滑动条当前值显示
+  .range-display {
+    font-size: 14px;
+    color: $dark-color;
+    font-weight: 500;
+    text-align: center;
+  }
+}
+
+// 按钮样式
+.btn {
+  padding: 8px 16px;
+  border: none;
+  border-radius: $border-radius;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: $transition;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  
+  &.btn-primary {
+    background-color: $primary-color;
+    color: white;
+    
+    &:hover:not(:disabled) {
+      background-color: #0056b3;
+      box-shadow: 0 4px 8px rgba(0, 112, 243, 0.2);
+    }
+  }
+  
+  &.btn-secondary {
+    background-color: $secondary-color;
+    color: white;
+    
+    &:hover:not(:disabled) {
+      background-color: #5a6268;
+      box-shadow: 0 4px 8px rgba(108, 117, 125, 0.2);
+    }
+  }
+  
+  &.btn-small {
+    padding: 6px 12px;
+    font-size: 12px;
+  }
+  
+  &.btn-large {
+    padding: 12px 24px;
+    font-size: 16px;
+    width: 100%;
+  }
+  
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    box-shadow: none;
+  }
+}
+
+// 批量下载按钮
+.batch-download-btn {
+  margin-top: 16px;
+}
+
+// 处理进度蒙层
+.processing-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  
+  .processing-content {
+    background: white;
+    padding: 32px;
+    border-radius: $border-radius;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    max-width: 400px;
+    width: 90%;
+  }
+  
+  .processing-text {
+    font-size: 16px;
+    color: $dark-color;
+    margin-bottom: 16px;
+  }
+  
+  .progress-bar-container {
+    width: 100%;
+    height: 8px;
+    background-color: $light-color;
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 12px;
+  }
+  
+  .progress-bar {
+    height: 100%;
+    background-color: $primary-color;
+    transition: width 0.3s ease;
+    border-radius: 4px;
+  }
+  
+  .progress-percentage {
+    font-size: 14px;
+    color: $secondary-color;
+  }
+}
+
+// 预览模态框
+.preview-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 20px;
+  
+  .preview-content {
+    background: white;
+    border-radius: $border-radius;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+    max-width: 800px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+  }
+  
+  .close-btn {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: $secondary-color;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: $transition;
+    
+    &:hover {
+      background-color: $light-color;
+      color: $dark-color;
+    }
+  }
+  
+  h3 {
+    padding: 20px 20px 0;
+    margin: 0;
+  }
+  
+  .preview-image-container {
+    padding: 20px;
+    text-align: center;
+    
+    img {
+      max-width: 100%;
+      max-height: 50vh;
+      object-fit: contain;
+      border-radius: $border-radius;
+    }
+  }
+  
+  .preview-info {
+    padding: 0 20px 20px;
+    font-size: 14px;
+    color: $secondary-color;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  
+  .preview-actions {
+    padding: 0 20px 20px;
+    display: flex;
+    justify-content: center;
+  }
+}
+
+// 深色主题支持
+.dark {
+  .pdf-to-image h2,
+  .pdf-to-image h3 {
+    color: #f3f4f6;
+  }
+  
+  .converter-container {
+    background: #1f2937;
+  }
+  
+  .pdf-area {
+    border-bottom-color: #4b5563;
+  }
+  
+  .upload-area {
+    background: #1f2937;
+    border-color: #4b5563;
+    
+    &:hover {
+      border-color: #3b82f6;
+      background-color: rgba(59, 130, 246, 0.05);
+    }
+    
+    .upload-text {
+      color: #f3f4f6;
+    }
+    
+    .upload-hint {
+      color: #9ca3af;
+    }
+    
+    .upload-icon {
+      color: #9ca3af;
+    }
+  }
+  
+  .pdf-info {
+    background: #374151;
+    
+    .pdf-info-label {
+      color: #f3f4f6;
+    }
+    
+    .pdf-info-value {
+      color: #9ca3af;
+    }
+  }
+  
+  .preview-area {
+    border-right-color: #4b5563;
+    
+    @media (max-width: 768px) {
+      border-bottom-color: #4b5563;
+    }
+    
+    .empty-preview {
+      background: #374151;
+      color: #9ca3af;
+    }
+    
+    .image-grid::-webkit-scrollbar-track {
+      background: #374151;
+    }
+    
+    .image-grid::-webkit-scrollbar-thumb {
+      background: #4b5563;
+      
+      &:hover {
+        background: #6b7280;
+      }
+    }
+  }
+  
+  .image-item {
+    background: #1f2937;
+    border-color: #4b5563;
+    
+    .image-name {
+      color: #f3f4f6;
+    }
+    
+    .image-meta {
+      color: #9ca3af;
+    }
+  }
+  
+  .params-area {
+    background-color: #374151;
+  }
+  
+  .param-item {
+    label {
+      color: #f3f4f6;
+    }
+    
+    select,
+    input[type="number"] {
+      background: #1f2937;
+      border-color: #4b5563;
+      color: #f3f4f6;
+      
+      &:focus {
+        border-color: #3b82f6;
+        box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.25);
+      }
+    }
+    
+    .checkbox-label {
+      color: #f3f4f6;
+    }
+    
+    .segmented-control {
+      background: #1f2937;
+      border-color: #4b5563;
+      
+      .segmented-item {
+        color: #9ca3af;
+        
+        &:hover {
+          background-color: rgba(59, 130, 246, 0.15);
+          color: #3b82f6;
+        }
+        
+        &.active {
+          background: #3b82f6;
+          color: white;
+        }
+      }
+    }
+  }
+  
+  .processing-overlay {
+    background-color: rgba(0, 0, 0, 0.8);
+    
+    .processing-content {
+      background: #1f2937;
+      color: #f3f4f6;
+    }
+    
+    .processing-text {
+      color: #f3f4f6;
+    }
+    
+    .progress-bar-container {
+      background: #374151;
+    }
+    
+    .progress-bar {
+      background-color: #3b82f6;
+    }
+    
+    .progress-percentage {
+      color: #9ca3af;
+    }
+  }
+  
+  .preview-modal {
+    background-color: rgba(0, 0, 0, 0.9);
+    
+    .preview-content {
+      background: #1f2937;
+      color: #f3f4f6;
+    }
+    
+    h3 {
+      color: #f3f4f6;
+    }
+    
+    .preview-info {
+      color: #9ca3af;
+    }
+    
+    .close-btn {
+      color: #9ca3af;
+      
+      &:hover {
+        background-color: #374151;
+        color: #f3f4f6;
+      }
+    }
+  }
+  
+  .btn {
+    &.btn-primary {
+      background-color: #3b82f6;
+      
+      &:hover:not(:disabled) {
+        background-color: #2563eb;
+      }
+    }
+    
+    &.btn-secondary {
+      background-color: #6b7280;
+      
+      &:hover:not(:disabled) {
+        background-color: #4b5563;
+      }
+    }
+    
+    &:disabled {
+      background-color: #374151;
+      color: #9ca3af;
+    }
+  }
+}
