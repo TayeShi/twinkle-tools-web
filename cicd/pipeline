@@ -1,0 +1,80 @@
+/**
+ * Jenkinsfile
+ */
+pipeline {
+	agent any
+
+    parameters {
+        string(name: 'NEXT_PUBLIC_ICP_NUMBER', defaultValue: '蜀ICP备2020029991号-1', description: 'ICP备案号')
+        string(name: 'NEXT_PUBLIC_ICP_URL', defaultValue: 'https://beian.miit.gov.cn/', description: 'ICP备案链接')
+    }
+
+    environment {
+        SERVICE_NAME = 'twinkle-tools-web'
+        SERVICE_PORT = '10011'
+        NEXT_PUBLIC_ICP_NUMBER="${params.NEXT_PUBLIC_ICP_NUMBER}"
+        NEXT_PUBLIC_ICP_URL="${params.NEXT_PUBLIC_ICP_URL}"
+        ImgName     = 'twinkle-tools-web'
+        ImgTag      = "${currentBuild.number}"
+        PrevImgTag  = "${currentBuild.previousBuild.getNumber()}"
+        Dockerfile  = "Dockerfile"
+    }
+
+    stages {
+        stage('build image') {
+            steps {
+                echo "build image ..."
+                sh """
+                    docker --version
+                    docker build -t $ImgName:$ImgTag -f $Dockerfile \
+                      --build-arg NEXT_PUBLIC_ICP_NUMBER=${NEXT_PUBLIC_ICP_NUMBER} \
+                      --build-arg NEXT_PUBLIC_ICP_URL=${NEXT_PUBLIC_ICP_URL} \
+                       .
+                    """
+            }
+        }
+        stage('restart service') {
+            steps {
+                script {
+                    // 检查容器是否正在运行
+                    def isRunning = sh(
+                        script: "docker ps --filter name=^/${SERVICE_NAME} --format '{{.Names}}'",
+                        returnStdout: true
+                    ).trim()
+                    if (isRunning == SERVICE_NAME) {
+                        echo "Container ${SERVICE_NAME} is running, stopping it..."
+                        sh "docker stop ${SERVICE_NAME}"
+                        sh "docker rm ${SERVICE_NAME}"
+                    } else {
+                        echo "Container ${SERVICE_NAME} is not running."
+                    }
+                    echo "Container ${SERVICE_NAME} start new"
+			    sh """
+					docker run \
+                        -e NEXT_PUBLIC_ICP_NUMBER=${NEXT_PUBLIC_ICP_NUMBER} \
+                        -e NEXT_PUBLIC_ICP_URL=${NEXT_PUBLIC_ICP_URL} \
+					    -d -p ${SERVICE_PORT}:8080 --restart=always --name ${SERVICE_NAME} ${ImgName}:${ImgTag}
+				"""
+                }
+            }
+        }
+        stage('remove previous image') {
+            steps {
+				echo "Removing previous image..."
+				sh "docker rmi ${ImgName}:${PrevImgTag} || true"
+            }
+        }
+    }
+    post {
+        success {
+            echo "Pipeline completed successfully."
+        }
+        failure {
+            echo "Pipeline failed."
+        }
+        always {
+            // 清理工作，例如删除所有临时文件或资源
+            echo "Performing cleanup tasks..."
+        }
+    }
+}
