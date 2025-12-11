@@ -252,14 +252,14 @@ const PdfToImage = () => {
                       <img src={image.imageUrl} alt={`PDF第${image.pageNumber}页`} />
                     </div>
                     <div className="image-info">
-                      <div className="image-name">第{image.pageNumber}页</div>
                       <div className="image-meta">
-                        <div>格式: {image.format.split('/')[1].toUpperCase()}</div>
-                        <div>大小: {formatFileSize(image.size)}</div>
-                        <div>尺寸: {image.width}×{image.height}</div>
+                        {image.format.split('/')[1].toUpperCase()} / {formatFileSize(image.size)} / {image.width}×{image.height}
                       </div>
-                      <div className="image-actions">
-                        <button onClick={() => handleDownloadImage(image)} className="btn btn-small btn-primary">下载</button>
+                      <div className="image-info-header">
+                        <div className="image-name">第{image.pageNumber}页</div>
+                        <div className="image-actions">
+                          <button onClick={() => handleDownloadImage(image)} className="btn btn-small btn-primary">下载</button>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -293,6 +293,7 @@ const PdfToImage = () => {
               {/* 最大文件大小 */}
               <div className="param-item">
                 <label htmlFor="maxSize">最大文件大小</label>
+                {/* 桌面端使用分段控制器 */}
                 <div className="segmented-control">
                   {sizeOptions.map((size) => (
                     <button
@@ -304,6 +305,19 @@ const PdfToImage = () => {
                     </button>
                   ))}
                 </div>
+                {/* 移动端使用select元素 */}
+                <select
+                  id="maxSize"
+                  className="size-select"
+                  value={conversionParams.maxSize}
+                  onChange={(e) => setConversionParams(prev => ({ ...prev, maxSize: parseFloat(e.target.value) }))}
+                >
+                  {sizeOptions.map((size) => (
+                    <option key={size} value={size}>
+                      {size === 0 ? '最优' : size === 0.256 ? '256KB' : size === 0.512 ? '512KB' : `${size}MB`}
+                    </option>
+                  ))}
+                </select>
               </div>
               
               {/* 黑白转换 */}

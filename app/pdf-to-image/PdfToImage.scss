@@ -193,6 +193,9 @@ $transition: all 0.3s ease;
   overflow: hidden;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
   transition: $transition;
+  display: flex;
+  flex-direction: column; // 按HTML结构顺序显示：图片 -> 信息
+  height: 100%;
   
   &:hover {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
@@ -203,6 +206,8 @@ $transition: all 0.3s ease;
     height: 150px;
     overflow: hidden;
     cursor: pointer;
+    padding: 12px;
+    box-sizing: border-box;
     
     img {
       width: 100%;
@@ -218,26 +223,33 @@ $transition: all 0.3s ease;
   
   .image-info {
     padding: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
     
     .image-name {
       font-weight: 500;
       color: $dark-color;
-      margin-bottom: 8px;
+      margin-bottom: 0;
       font-size: 14px;
     }
     
     .image-meta {
       font-size: 12px;
       color: $secondary-color;
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-      margin-bottom: 12px;
+      margin-bottom: 0;
     }
     
     .image-actions {
       display: flex;
-      justify-content: center;
+      justify-content: flex-end;
+    }
+    
+    .image-info-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
     }
   }
 }
@@ -315,6 +327,7 @@ $transition: all 0.3s ease;
       cursor: pointer;
       transition: $transition;
       outline: none;
+      white-space: nowrap; // 防止文字换行
       
       &:hover {
         background-color: rgba(0, 112, 243, 0.08);
@@ -325,6 +338,37 @@ $transition: all 0.3s ease;
         background: $primary-color;
         color: white;
       }
+    }
+  }
+  
+  // 移动端select样式
+  .size-select {
+    display: none; // 默认隐藏
+    padding: 10px 16px;
+    border: 2px solid $border-color;
+    border-radius: $border-radius;
+    font-size: 14px;
+    font-weight: 500;
+    background-color: white;
+    color: $dark-color;
+    cursor: pointer;
+    transition: $transition;
+    
+    &:focus {
+      outline: none;
+      border-color: $primary-color;
+      box-shadow: 0 0 0 2px rgba(0, 112, 243, 0.1);
+    }
+  }
+  
+  // 响应式设计：移动端切换为select样式
+  @media (max-width: 768px) {
+    .segmented-control {
+      display: none;
+    }
+    
+    .size-select {
+      display: block;
     }
   }
   
