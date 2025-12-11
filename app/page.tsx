@@ -13,18 +13,18 @@ type Tool = {
 // 模拟工具数据
 const tools: Tool[] = [
   {
-    id: "json-formatter",
-    name: "JSON格式化工具",
-    description: "在线JSON格式化、验证、压缩和转换工具",
-    icon: "📋",
-    category: "开发工具"
+    id: "image-compressor",
+    name: "图片压缩工具",
+    description: "在线压缩图片大小，保持质量",
+    icon: "🖼️",
+    category: "图片工具"
   },
   {
-    id: "base64-encoder",
-    name: "Base64编码解码",
-    description: "在线Base64编码和解码工具",
-    icon: "🔤",
-    category: "开发工具"
+    id: "pdf-to-image",
+    name: "PDF转图片工具",
+    description: "在线将PDF文件转换为图片格式",
+    icon: "📄",
+    category: "转换工具"
   },
   {
     id: "timestamp",
@@ -33,41 +33,41 @@ const tools: Tool[] = [
     icon: "⏰",
     category: "开发工具"
   },
-  {
-    id: "pdf-to-image",
-    name: "PDF转图片工具",
-    description: "在线将PDF文件转换为图片格式",
-    icon: "📄",
-    category: "图片工具"
-  },
-  {
-    id: "md5-generator",
-    name: "MD5加密工具",
-    description: "在线生成MD5哈希值",
-    icon: "🔒",
-    category: "安全工具"
-  },
-  {
-    id: "random-password",
-    name: "随机密码生成器",
-    description: "生成高强度随机密码",
-    icon: "🔑",
-    category: "安全工具"
-  },
-  {
-    id: "image-compressor",
-    name: "图片压缩工具",
-    description: "在线压缩图片大小，保持质量",
-    icon: "🖼️",
-    category: "图片工具"
-  },
-  {
-    id: "url-shortener",
-    name: "URL短链接生成器",
-    description: "将长URL转换为短链接",
-    icon: "🔗",
-    category: "网络工具"
-  }
+  // {
+  //   id: "json-formatter",
+  //   name: "JSON格式化工具",
+  //   description: "在线JSON格式化、验证、压缩和转换工具",
+  //   icon: "📋",
+  //   category: "开发工具"
+  // },
+  // {
+  //   id: "base64-encoder",
+  //   name: "Base64编码解码",
+  //   description: "在线Base64编码和解码工具",
+  //   icon: "🔤",
+  //   category: "开发工具"
+  // },
+  // {
+  //   id: "md5-generator",
+  //   name: "MD5加密工具",
+  //   description: "在线生成MD5哈希值",
+  //   icon: "🔒",
+  //   category: "安全工具"
+  // },
+  // {
+  //   id: "random-password",
+  //   name: "随机密码生成器",
+  //   description: "生成高强度随机密码",
+  //   icon: "🔑",
+  //   category: "安全工具"
+  // },
+  // {
+  //   id: "url-shortener",
+  //   name: "URL短链接生成器",
+  //   description: "将长URL转换为短链接",
+  //   icon: "🔗",
+  //   category: "网络工具"
+  // }
 ];
 
 export default function Home() {

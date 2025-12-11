@@ -133,28 +133,29 @@ const Header = () => {
           <h1 className="logo-text">Twinkle Tools</h1>
         </Link>
         
-        <nav className="nav">
-          <Link 
-            href="/" 
-            className="nav-link"
-          >
-            首页
-          </Link>
-          <Link 
-            href="/tools" 
-            className="nav-link"
-          >
-            工具
-          </Link>
-          <Link 
-            href="/about" 
-            className="nav-link"
-          >
-            关于
-          </Link>
-        </nav>
-        
-        <div className="theme-toggle-container" ref={menuRef}>
+        <div className="header-right" ref={menuRef}>
+          <nav className="nav">
+            <Link 
+              href="/" 
+              className="nav-link"
+            >
+              首页
+            </Link>
+            <Link 
+              href="/tools" 
+              className="nav-link"
+            >
+              工具
+            </Link>
+            <Link 
+              href="/about" 
+              className="nav-link"
+            >
+              关于
+            </Link>
+          </nav>
+          
+          <div className="theme-toggle-container">
           <button
             onClick={toggleMenu}
             className="theme-toggle"
@@ -186,7 +187,8 @@ const Header = () => {
           )}
         </div>
       </div>
-    </header>
+    </div>
+  </header>
   );
 };
 
