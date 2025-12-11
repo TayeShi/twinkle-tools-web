@@ -86,6 +86,20 @@
   font-size: 13px;
 }
 
+.footer-icp {
+  font-size: 13px;
+}
+
+.icp-link {
+  color: var(--secondary);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.icp-link:hover {
+  color: var(--primary);
+}
+
 /* 暗黑主题样式 */
 .dark {
   .footer {

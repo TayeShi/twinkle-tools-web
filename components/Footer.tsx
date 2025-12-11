@@ -1,4 +1,5 @@
 import './Footer.scss';
+import { env } from '../utils/env';
 
 const Footer = () => {
   return (
@@ -20,6 +21,17 @@ const Footer = () => {
           
           <div className="footer-copyright">
             © {new Date().getFullYear()} Twinkle Tools. 保留所有权利。
+          </div>
+          
+          <div className="footer-icp">
+            <a 
+              href={env.ICP_URL} 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="icp-link"
+            >
+              {env.ICP_NUMBER}
+            </a>
           </div>
         </div>
       </div>
