@@ -42,6 +42,7 @@ const PdfMerge = () => {
     setFiles((prev) => [...prev, ...valid]);
     setPreviewUrl(null);
     setPreviewLocked(false);
+    setPreviewImages([]);
   }, []);
 
   const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -69,6 +70,7 @@ const PdfMerge = () => {
     });
     setPreviewLocked(false);
     setPreviewUrl(null);
+    setPreviewImages([]);
   };
 
   const moveDown = (index: number) => {
@@ -80,18 +82,21 @@ const PdfMerge = () => {
     });
     setPreviewLocked(false);
     setPreviewUrl(null);
+    setPreviewImages([]);
   };
 
   const removeFile = (index: number) => {
     setFiles((prev) => prev.filter((_, i) => i !== index));
     setPreviewLocked(false);
     setPreviewUrl(null);
+    setPreviewImages([]);
   };
 
   const clearFiles = () => {
     setFiles([]);
     setPreviewLocked(false);
     setPreviewUrl(null);
+    setPreviewImages([]);
   };
 
   const startMerge = async (): Promise<Blob | null> => {
