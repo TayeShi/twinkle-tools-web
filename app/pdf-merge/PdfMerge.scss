@@ -1,0 +1,250 @@
+.pdf-merge {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  padding: 40px 0;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.top-row {
+  display: grid;
+  grid-template-columns: 1fr 280px;
+  gap: 16px;
+}
+
+.upload-area {
+  border: 2px dashed var(--border);
+  border-radius: 12px;
+  padding: 16px;
+  cursor: pointer;
+  background: var(--light);
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+  min-height: 240px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.upload-area:hover {
+  background: var(--border);
+}
+
+.upload-hint {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+  color: var(--secondary);
+}
+
+.empty-state {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.hidden-input {
+  display: none;
+}
+
+.file-list .list-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.file-list .list-header .actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.file-list .empty {
+  color: var(--secondary);
+  padding: 12px;
+}
+
+.file-list ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-height: 260px;
+  overflow: auto;
+}
+
+.file-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--background);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 10px 12px;
+}
+
+.file-item .meta .name {
+  font-weight: 600;
+}
+
+.file-item .meta .info {
+  color: var(--secondary);
+  font-size: 12px;
+}
+
+.item-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.list-summary {
+  margin-top: 8px;
+  color: var(--secondary);
+  font-size: 12px;
+}
+
+.actions-area {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.btn {
+  border: 1px solid var(--primary);
+  color: white;
+  background: var(--primary);
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.btn-secondary {
+  border-color: var(--border);
+  color: var(--foreground);
+  background: var(--light);
+}
+
+.btn-danger {
+  border-color: var(--danger);
+  color: white;
+  background: var(--danger);
+}
+
+.btn-large {
+  padding: 12px 16px;
+}
+
+.btn-small {
+  padding: 4px 8px;
+  font-size: 12px;
+}
+
+.bottom.preview-area {
+  background: var(--background);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 12px;
+  min-height: 360px;
+}
+
+.preview-header {
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.preview-empty {
+  color: var(--secondary);
+  padding: 12px;
+}
+
+.preview-frame {
+  width: 100%;
+  height: 560px;
+  border: none;
+  border-radius: 8px;
+  background: var(--background);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.processing-overlay {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.processing-content {
+  width: 360px;
+  background: var(--background);
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  padding: 16px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.2);
+}
+
+.processing-text {
+  margin-bottom: 12px;
+  color: var(--foreground);
+}
+
+.progress-bar-container {
+  width: 100%;
+  height: 8px;
+  border-radius: 100px;
+  background: var(--border);
+  overflow: hidden;
+}
+
+.progress-bar {
+  height: 100%;
+  background: var(--primary);
+  width: 0%;
+}
+
+.progress-percentage {
+  margin-top: 8px;
+  font-size: 12px;
+  color: var(--secondary);
+  text-align: right;
+}
+
+@media (max-width: 960px) {
+  .top-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* 暗黑主题增强（可选） */
+.dark {
+  .upload-area {
+    background: var(--background);
+  }
+  .btn-secondary {
+    background: var(--border);
+    color: var(--foreground);
+  }
+}

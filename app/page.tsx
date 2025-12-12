@@ -27,6 +27,13 @@ const tools: Tool[] = [
     category: "转换工具"
   },
   {
+    id: "pdf-merge",
+    name: "PDF合并工具",
+    description: "将多个PDF或图片按顺序合并成一个PDF",
+    icon: "🧩",
+    category: "PDF工具"
+  },
+  {
     id: "timestamp",
     name: "时间戳转换工具",
     description: "在线时间戳转换工具，支持时间戳与日期时间之间的双向转换",
