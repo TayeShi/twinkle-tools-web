@@ -16,6 +16,7 @@ const PdfMerge = () => {
   const [progress, setProgress] = useState<MergeProgress | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [previewLocked, setPreviewLocked] = useState(false);
+  const [previewImages, setPreviewImages] = useState<Array<{ pageNumber: number; url: string; width: number; height: number }>>([]);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const totalSize = useMemo(
@@ -110,9 +111,12 @@ const PdfMerge = () => {
   const handleParsePreview = async () => {
     const blob = await startMerge();
     if (!blob) return;
+    // 生成Blob URL用于下载备用
     const url = URL.createObjectURL(blob);
     setPreviewUrl(url);
     setPreviewLocked(true);
+    // 使用pdfjs-dist渲染预览图片
+    await renderPreviewFromBlob(blob);
   };
 
   const handleDownload = async () => {
@@ -132,6 +136,41 @@ const PdfMerge = () => {
     if (e.key === 'Enter' || e.key === ' ') {
       e.preventDefault();
       fileInputRef.current?.click();
+    }
+  };
+
+  const renderPreviewFromBlob = async (blob: Blob) => {
+    setProcessing(true);
+    setProgress({ current: 0, total: 0, status: '正在生成预览...' });
+    try {
+      const pdfjsLib = await import('pdfjs-dist');
+      // 配置 worker
+      pdfjsLib.GlobalWorkerOptions.workerSrc = new URL('pdfjs-dist/build/pdf.worker.min.mjs', import.meta.url).toString();
+      const arrayBuffer = await blob.arrayBuffer();
+      const pdfDoc = await pdfjsLib.getDocument(arrayBuffer).promise;
+      const totalPages = pdfDoc.numPages;
+      setPreviewImages([]);
+      for (let pageNumber = 1; pageNumber <= totalPages; pageNumber++) {
+        setProgress({ current: pageNumber, total: totalPages, status: `预览渲染 ${pageNumber}/${totalPages}` });
+        const page = await pdfDoc.getPage(pageNumber);
+        const scale = 1.25;
+        const viewport = page.getViewport({ scale });
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+        if (!ctx) {
+          throw new Error('无法创建Canvas上下文');
+        }
+        canvas.width = viewport.width;
+        canvas.height = viewport.height;
+        const renderContext = { canvas, viewport };
+        await page.render(renderContext).promise;
+        const url = canvas.toDataURL('image/png');
+        setPreviewImages((prev) => [...prev, { pageNumber, url, width: canvas.width, height: canvas.height }]);
+      }
+    } catch (e) {
+      console.error('预览渲染失败', e);
+    } finally {
+      setProcessing(false);
     }
   };
 
@@ -276,14 +315,25 @@ const PdfMerge = () => {
 
       <div className="bottom preview-area">
         <div className="preview-header">预览</div>
-        {!previewUrl ? (
+        {previewImages.length === 0 ? (
           <div className="preview-empty">点击“解析预览”后在此显示合并结果</div>
         ) : (
-          <iframe
-            src={previewUrl}
-            title="merged-preview"
-            className="preview-frame"
-          />
+          <div className="pdf-preview">
+            <div className="preview-pages" aria-label="PDF页面预览">
+              {previewImages
+                .slice()
+                .sort((a, b) => a.pageNumber - b.pageNumber)
+                .map((img) => (
+                <div key={img.pageNumber} className="preview-page">
+                  <div className="page-header">第 {img.pageNumber} 页</div>
+                  <img
+                    src={img.url}
+                    alt={`第 ${img.pageNumber} 页预览`}
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
         )}
       </div>
 
