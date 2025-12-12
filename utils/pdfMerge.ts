@@ -83,7 +83,8 @@ export const mergePdfs = async (
     const mergedPdfBytes = await mergedPdf.save();
     
     // 返回 Blob 对象，指定类型为 application/pdf
-    return new Blob([mergedPdfBytes], { type: 'application/pdf' });
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    return new Blob([mergedPdfBytes as any], { type: 'application/pdf' });
   } catch (error) {
     console.error('PDF合并失败:', error);
     throw error;
