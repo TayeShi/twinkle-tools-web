@@ -1,0 +1,42 @@
+{
+  "name": "twinkle-tools-web",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TayeShi/twinkle-tools-web.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/TayeShi/twinkle-tools-web/issues"
+  },
+  "homepage": "https://github.com/TayeShi/twinkle-tools-web#readme",
+  "dependencies": {
+    "@heroicons/react": "^2.2.0",
+    "@tailwindcss/postcss": "^4.1.18",
+    "@types/node": "^25.0.8",
+    "@types/react": "^19.2.8",
+    "@types/react-dom": "^19.2.3",
+    "autoprefixer": "^10.4.23",
+    "next": "^16.1.2",
+    "postcss": "^8.5.6",
+    "react": "^19.2.3",
+    "react-dom": "^19.2.3",
+    "tailwindcss": "^4.1.18",
+    "typescript": "^5.9.3",
+    "zustand": "^5.0.10"
+  }
+}
