@@ -9,8 +9,8 @@
 ## 技术栈
 
 ### 核心技术
-- Next.js 14+ (App Router, SSR/SSG)
-- React 18+ (客户端组件)
+- Next.js (App Router, SSR/SSG)
+- React (客户端组件)
 - sharp-wasm (图片处理)
 - Zustand (状态管理)
 - Tailwind CSS (样式)
